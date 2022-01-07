@@ -23,16 +23,18 @@ const middleIcon = ['fas fa-home', 'fab fa-youtube', 'fas fa-users', 'fas fa-dic
 const middleIconLink = ['/home', '/watch', '/group', '/game']
 
 
-export default function Navbar() {
+export default function Navbar({user}) {
   const classes = useStyles();
   const [leftLine, setleftLine] = useState(528)
   const [activeIcon, setActiveIcon] = useState(0)
 
   useEffect(() => {
-    resetAvtive()
-    setleftLine(528+activeIcon*116)
+    if(user){
+      resetAvtive()
+      setleftLine(528+activeIcon*116)
 
-    document.getElementById("boxIcon").children[activeIcon].children[0].style.color = "#94c2ff"
+      document.getElementById("boxIcon").children[activeIcon].children[0].style.color = "#94c2ff"
+    }
   },[activeIcon])
 
 
@@ -45,7 +47,7 @@ export default function Navbar() {
     document.getElementById("boxIcon").children[3].children[0].style.color = "white"
   }
 
-
+  if(user)
   return (
       <div className={classes.grow}>
         <AppBar position="static">
@@ -121,5 +123,6 @@ export default function Navbar() {
           </Toolbar>
           </AppBar>
       </div>
-  );
+  )
+  else return null
 }

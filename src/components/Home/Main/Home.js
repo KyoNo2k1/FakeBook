@@ -1,14 +1,15 @@
 import React from 'react'
-import {  CardActions, Grid, Grow } from '@material-ui/core'
-import useStyles from './styles'
+import {  Grid, Grow } from '@material-ui/core'
 
+// import useStyles from './styles'
 import Category from '../Category/Category'
 import FriendList from '../FriendList/FriendList'
 import Posts from '../Posts/Posts'
 
 
-function Home() {
-    const classes = useStyles()
+
+function Home({setUser}) {
+    // const classes = useStyles()
 
     return (
         <Grow in>

@@ -27,7 +27,6 @@ export default makeStyles((theme) => ({
         backgroundColor: "#e0e0e0",
     },
     divider: {
-        // Theme Color, or use css color in quote
         background: '#f50057',
     },
 }));
