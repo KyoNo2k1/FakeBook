@@ -35,7 +35,7 @@ export default function Navbar({user}) {
 
       document.getElementById("boxIcon").children[activeIcon].children[0].style.color = "#94c2ff"
     }
-  },[activeIcon])
+  },[activeIcon,user])
 
 
   const Line = () => <div style={{left: leftLine + 'px'}} className={classes.line}></div>

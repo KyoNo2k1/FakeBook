@@ -8,9 +8,9 @@ import Posts from '../Posts/Posts'
 
 
 
-function Home({setUser}) {
+function Home({user,setUser}) {
     // const classes = useStyles()
-
+    if(!user) setUser((JSON.parse(localStorage.getItem('profile'))))
     return (
         <Grow in>
             <Grid container justify="center" alignItems="stretch" style={{marginTop: 70, height: '100%'}} >
@@ -26,6 +26,7 @@ function Home({setUser}) {
             </Grid>
         </Grow>
     )
+
 }
 
 export default Home

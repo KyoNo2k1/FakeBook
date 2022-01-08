@@ -6,7 +6,7 @@ const user = createSlice({
     name: 'user',
     initialState: [],
     reducers: {
-        signup: async (state= { authData: null }, action) => {
+        signup: async (state , action) => {
             const { data } = await api.signUp(action.payload)
 
             localStorage.setItem('profile', JSON.stringify({...data}))

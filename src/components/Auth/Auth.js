@@ -29,7 +29,7 @@ function Auth({setUser}) {
         else {
             dispatch(signin(formData))
         }
-        navigate('../home')
+        setTimeout(() => navigate('../home'),2000)
     }
 
     const handleChange = (e) => {
