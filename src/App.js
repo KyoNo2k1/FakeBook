@@ -7,11 +7,8 @@ import Auth from './components/Auth/Auth';
 import './App.css';
 
 function App() {
-  // const user = JSON.parse(localStorage.getItem('profile'))
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
-  // useEffect(() => {
-  //   setUser(null)
-  // },[user])
+
   return (
     <BrowserRouter>
       <Navbar user={user}/>

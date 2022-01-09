@@ -13,7 +13,7 @@ const user = createSlice({
         },
         signin: async (state, action) => {
             const { data } = await api.signIn(action.payload)
-
+            console.log(data);
             localStorage.setItem('profile', JSON.stringify({...data}))
         },
         logout: (state, action) => {

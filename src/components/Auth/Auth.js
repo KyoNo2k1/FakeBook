@@ -22,14 +22,25 @@ function Auth({setUser}) {
 
     const handleSubmit =async (e) => {
         e.preventDefault()
-
         if(isSignup) {
-            dispatch(signup(formData))
+            if (e.target[6].value === e.target[9].value){
+                dispatch(signup(formData))
+                setTimeout(() => navigate('../home'),2000)
+            }
+            else {
+                alert("Re-entered password does not match!")
+                e.target[9].value = ''
+            }
         }
         else {
             dispatch(signin(formData))
+            setTimeout(() => {
+                if(JSON.parse(localStorage.getItem('profile')) == null){
+                    alert("Username or password incorrect!")
+                }
+                else navigate('../home')
+            },2000)
         }
-        setTimeout(() => navigate('../home'),2000)
     }
 
     const handleChange = (e) => {
