@@ -11,10 +11,10 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar user={user}/>
+      <Navbar user={user} setUser={setUser}/>
       <Routes>
         <Route path="/" exact element={<Navigate to="/login" />} />
-        <Route path="/home" exact element={<Home user={user} setUser={setUser} />} />
+        <Route path="/home" exact element={<Home user={user} setUser={setUser}/>}/>
         <Route path="/login" exact element={!user ? <Auth/> : <Navigate to="/home"/>}/>
       </Routes>
     </BrowserRouter>

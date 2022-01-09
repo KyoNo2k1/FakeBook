@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as api from '../../../app/api.js'
 
 
+
 const user = createSlice({
     name: 'user',
     initialState: [],
@@ -13,7 +14,7 @@ const user = createSlice({
         },
         signin: async (state, action) => {
             const { data } = await api.signIn(action.payload)
-            console.log(data);
+
             localStorage.setItem('profile', JSON.stringify({...data}))
         },
         logout: (state, action) => {
@@ -23,5 +24,5 @@ const user = createSlice({
 })
 
 const { reducer, actions } = user
-export const { signup, signin } = actions
+export const { signup, signin, logout } = actions
 export default reducer

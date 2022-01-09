@@ -133,7 +133,7 @@ export default makeStyles((theme) => ({
     notiCount: {
       position: 'absolute',
       top: -25,
-      left: -15,
+      left: 32,
       width: 20,
       height: 20,
       backgroundColor: 'red',
@@ -147,5 +147,11 @@ export default makeStyles((theme) => ({
       position: "absolute",
       backgroundColor: "#94c2ff",
       bottom: 0,
-    }
+    },
+    listMenu: {
+      background: '#3f51b5',
+    },
+    divider: {
+      background: '#f50057',
+    },
   }));
