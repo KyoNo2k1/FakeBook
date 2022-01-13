@@ -129,6 +129,10 @@ export default makeStyles((theme) => ({
       '&:hover': {
         backgroundColor: '#afbbff',
       },
+      '&:active': {
+        backgroundColor: '#94c2ff',
+        opacity: "0.5"
+      },
     },
     notiCount: {
       position: 'absolute',
@@ -154,4 +158,8 @@ export default makeStyles((theme) => ({
     divider: {
       background: '#f50057',
     },
+    rightIconClick: {
+      position: 'relative',
+
+    }
   }));

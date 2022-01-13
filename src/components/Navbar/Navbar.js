@@ -59,14 +59,16 @@ export default function Navbar({user,setUser}) {
     document.getElementById("boxIcon").children[3].children[0].style.color = "white"
   }
   const handleLogout =() => {
-    console.log("logout");
     try {
       dispatch(logout())
     } catch (error) {
       console.log(error);
     }
     setUser(JSON.parse(localStorage.getItem('profile')))
-    setTimeout(() => navigate('../login'),500)
+    setTimeout(() => {
+      setAnchorEl(null)
+      navigate('../login')
+    },500)
   }
 
   if(user)
@@ -121,7 +123,7 @@ export default function Navbar({user,setUser}) {
                 <Icon>
                   <CgMenuGridO className={classes.rightLocationIconCss} />
                 </Icon>
-                <Icon style={{position: 'relative',}}>
+                <Icon style={{position: 'relative'}}>
                   <RiMessengerFill className={classes.rightLocationIconCss} />
                   <div className={classes.notiCount}>
                     <span style={{position: 'absolute',top: -1, left: 6, fontSize: '1rem'}}>
@@ -137,15 +139,16 @@ export default function Navbar({user,setUser}) {
                     </span>
                   </div>
                 </Icon>
-                  <Icon onClick={(e) => handleClick(e)}>
-                    <AiOutlineArrowDown className={classes.rightLocationIconCss} />
-                  </Icon>
+                <Icon >
+                  <AiOutlineArrowDown className={classes.rightLocationIconCss} onClick={(e) => handleClick(e)}/>
+                </Icon>
                   <Menu
                     anchorEl={anchorEl}
                     keepMounted
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                     elevation={0}
+                    disableAutoFocusItem= {true}
                     getContentAnchorEl={null}
                     anchorOrigin={{
                       vertical: 'bottom',

@@ -6,9 +6,7 @@ export default makeStyles(() => ({
         justifyContent: 'center',
         alignItems: 'center',
         padding: '20px',
-        borderRadius: '15px',
-        height: '39vh',
-        backgroundColor: 'transparent'
+        backgroundColor: '#92fff8'
     },
     circularProgressIcon: {
         width: '80px !important',

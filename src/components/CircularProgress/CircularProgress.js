@@ -3,7 +3,7 @@ import { Paper, CircularProgress } from '@material-ui/core';
 
 import useStyles from './styles'
 
-function CircularProgress() {
+function CircularProgressWaiting() {
     const classes = useStyles()
 
     return (
@@ -13,4 +13,4 @@ function CircularProgress() {
     )
 }
 
-export default CircularProgress
+export default CircularProgressWaiting

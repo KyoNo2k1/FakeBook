@@ -1,5 +1,6 @@
 import React from 'react'
-import {Avatar, Button, ButtonBase, CircularProgress, Divider, Grid ,Paper, TextField} from '@material-ui/core'
+import {Avatar, Button, ButtonBase, Divider, Grid ,Paper, TextField} from '@material-ui/core'
+import CircularProgress from '../../CircularProgress/CircularProgress'
 
 import Post from './Post/Post'
 import useStyles from './styles'
