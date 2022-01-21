@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {Avatar, Button, Divider, Grid, Modal } from '@material-ui/core'
-
+import { useSelector } from 'react-redux';
 
 import VideocamIcon from '@material-ui/icons/Videocam';
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
@@ -10,7 +10,7 @@ import userImg from '../../../../images/avatar.png'
 import useStyles from './styles'
 import Form from './Form/Form';
 
-function FormPost({posts}) {
+function FormPost() {
     const classes = useStyles()
     const [openForm, setOpenForm] = useState(false)
 
@@ -20,13 +20,13 @@ function FormPost({posts}) {
     const handleOpenForm = () => {
         setOpenForm(true)
     }
-
+    const userName = JSON.parse(localStorage.getItem('profile'))?.data?.name
     return (
         <Grid className={classes.formPost} container xs={12} sm={12} lg={12}>
             <div>
                 <Grid item xs={12} sm={12} lg={12} alignItems="center" className={classes.formPostTop}>
                     <Avatar alt="Nghia" src={userImg} className={classes.formPostAvatart}/>
-                    <Button fullWidth className={classes.formPostMessage} onClick={handleOpenForm}>{`${posts[0].userName} write here`}</Button>
+                    <Button fullWidth className={classes.formPostMessage} onClick={handleOpenForm}>{`${userName} write here`}</Button>
                 </Grid>
             </div>
             <Divider classes={{root: classes.divider}} variant="middle" style={{margin: '10px 20px'}}/>
@@ -53,7 +53,7 @@ function FormPost({posts}) {
                 </Grid>
             </div>
             <Modal open={openForm} onClose={handleCloseForm} >
-                { <Form posts={posts} setOpenForm={setOpenForm}/> }
+                { <Form userName={userName} setOpenForm={setOpenForm}/> }
             </Modal>
         </Grid>
     )

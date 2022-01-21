@@ -1,31 +1,27 @@
-import React, { useState, useEffect } from 'react'
-import { createPost } from '../../../../../app/api';
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import jwt_decode from "jwt-decode";
-import addPost from '../../../../redux/reducerSlice/postSlice'
 
-
+import {createPost} from '../../../../redux/reducerSlice/postSlice.js'
 import { Box, Button, Divider, Paper, TextField, Typography } from '@material-ui/core'
 import FileBase from 'react-file-base64'
 import CloseIcon from '@material-ui/icons/Close';
+import { reload } from '../../../../redux/reducerSlice/postSlice.js'
 
 
 import useStyles from './styles'
 
-function Form({posts,setOpenForm}) {
+function Form({userName,setOpenForm}) {
     const classes = useStyles()
     const [postData, setPostData] = useState({ message: '', selectedFile: [] })
     const dispatch = useDispatch()
-    const user = useSelector((store) => store?.users?.user?.data)
 
-    const handleSubmit =async (e) => {
+    const handleSubmit =(e) => {
         e.preventDefault()
-
-        console.log({user});
-
-        const {data} =await createPost({...postData})
-        console.log({data});
-        // dispatch(addPost(data))
+        dispatch(createPost(postData))
+        setOpenForm(false)
+        setTimeout(() => {
+            dispatch(reload())
+        },3000)
     }
     const clear = () => {
         setPostData({  message: '', selectedFile: [] })
@@ -37,7 +33,7 @@ function Form({posts,setOpenForm}) {
 
     return (
         <Paper className={classes.paper} elevation={6}>
-            <form autocomplete="off" noValidate className={`${classes.root} ${classes.form}}`} onSubmit={handleSubmit}>
+            <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}}`} onSubmit={handleSubmit}>
                 <Box style={{display: 'flex',position: 'relative',justifyContent: "center", alignItems: 'center'}}>
                     <Typography variant="h6" align="center">TẠO BÀI VIẾT</Typography>
                     <Button style={{position: "absolute", right: 0}} onClick={handleCloseForm}>
@@ -48,7 +44,7 @@ function Form({posts,setOpenForm}) {
                 <TextField
                     name="message"
                     variant="outlined"
-                    label={`nghia, bạn đang nghĩ gì thế ?` }
+                    label={`${userName}, bạn đang nghĩ gì thế ?` }
                     fullWidth
                     value={postData.message}
                     onChange={(e) => setPostData({ ...postData, message: e.target.value})}

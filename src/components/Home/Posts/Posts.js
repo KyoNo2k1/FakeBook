@@ -1,63 +1,46 @@
-import React from 'react'
-import {Avatar, Button, ButtonBase, Divider, Grid ,Paper, TextField} from '@material-ui/core'
-import CircularProgress from '../../CircularProgress/CircularProgress'
+import React, { useEffect, useState } from 'react'
+import { Grid } from '@material-ui/core'
+import { useSelector,useDispatch } from 'react-redux'
 
 import Post from './Post/Post'
 import useStyles from './styles'
 import FormPost from './FormPost/FormPost';
+import CircularProgress from '../../CircularProgress/CircularProgress.js'
+import { getPosts, currentLikePost } from '../../redux/reducerSlice/postSlice.js'
 
-const posts = [{
-    userId: 1,
-    userName: 'Nghia',
-    postId: 1,
-    message: 'hello1',
-    // selectedFile: String,
-    // likes: {
-    //     type: [String],
-    //     default: [],
-    // },
-    // comments: {
-    //     type: [String],
-    //     default: [],
-    // },
-    // createdAt: {
-    //     type: Date,
-    //     default: new Date()
-    // },
-},
-{
-    userId: 2,
-    userName: 'Nghia',
-    postId: 2,
-    message: 'hello2',
-}
-]
 
-const Posts = () => {
+const Posts = ({user}) => {
+    const {posts , status, likeList } = useSelector((store) => {
+        return store.posts
+    })
+    const [currentPost, setCurrentPost] = useState(posts)
     const classes = useStyles()
-    const isLoading  = false
 
-    if (!posts.length && !isLoading) return 'No posts!'
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getPosts())
+        dispatch(currentLikePost())
+    },[])
+    useEffect(() => {
+        if(posts) setCurrentPost(posts)
 
+    },[posts])
     return(
-        isLoading ?
-                <Paper elevation={0} className={classes.circularProgress}>
-                    <CircularProgress className={classes.circularProgressIcon} color="secondary" />
-                </Paper>
-            : (
-                <React.Fragment>
-                    <FormPost posts={posts}/>
-                    <Grid className={classes.container} container alignItems="stretch" spacing={3}>
-                        {
-                            posts.map(post => (
-                                <Grid key={post.postId} item xs={12} sm={12} lg={12}>
-                                    <Post post={post} />
-                                </Grid>
-                            ))
-                        }
-                    </Grid>
-                </React.Fragment>
-        )
+        <React.Fragment>
+            <FormPost/>
+            {status !== "SUCCESS" ?
+                <CircularProgress/> :
+                <Grid className={classes.container} container alignItems="stretch" spacing={3}>
+                    {
+                        currentPost?.map((post, index) => (
+                            <Grid key={index} item xs={12} sm={12} lg={12}>
+                                <Post post={post} postId={post.id} likeList={likeList}/>
+                            </Grid>
+                        ))
+                    }
+                </Grid>
+            }
+        </React.Fragment>
     )
 }
 

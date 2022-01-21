@@ -1,17 +1,14 @@
-import React from 'react'
-import {  Grid, Grow } from '@material-ui/core'
-
+import React, { useEffect } from 'react'
 // import useStyles from './styles'
+import {  Grid, Grow } from '@material-ui/core'
 import Category from '../Category/Category'
 import FriendList from '../FriendList/FriendList'
 import Posts from '../Posts/Posts'
 
-
-
 function Home({user,setUser}) {
     // const classes = useStyles()
     if(!user){
-        setUser((JSON.parse(localStorage.getItem('profile'))))
+        setUser((JSON.parse(localStorage.getItem('profile'))?.data))
         return null
     }
     return (
@@ -21,7 +18,7 @@ function Home({user,setUser}) {
                     <Category />
                 </Grid>
                 <Grid item xs={12} sm={6} md={5} >
-                    <Posts />
+                    <Posts user={user}/>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3} alignItems="stretch" style={{position: 'fixed', right: 0, width: '300px'}}>
                     <FriendList />

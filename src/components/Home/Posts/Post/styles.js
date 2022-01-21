@@ -6,6 +6,7 @@ export default makeStyles({
         paddingTop: '56.25%',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         backgroundBlendMode: 'darken',
+        marginBottom: 5,
     },
     border: {
         border: 'solid',
@@ -38,5 +39,11 @@ export default makeStyles({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        '&:hover': {
+            color: '#00ada6',
+            textDecoration: 'none',
+            cursor: 'pointer'
+          },
+
     }
 });

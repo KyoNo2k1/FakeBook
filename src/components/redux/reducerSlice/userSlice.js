@@ -5,11 +5,10 @@ export const login = createAsyncThunk(
     "users/getUser",
     async(data, { rejectWithValue }) => {
         const response = await api.signIn(data)
-        // const jsonData = response.json()
         if (response == null) {
             return rejectWithValue(response);
         }
-        return response?.data?.data
+        return response?.data
     }
 );
 export const signup = createAsyncThunk(
@@ -26,7 +25,7 @@ export const signup = createAsyncThunk(
 const user = createSlice({
     name: 'user',
     initialState: {
-        user: [],
+        user: {},
         status: null
     },
     extraReducers: {
@@ -36,7 +35,7 @@ const user = createSlice({
         [login.fulfilled]: (state, action) => {
             state.status = "success"
             localStorage.setItem('profile', JSON.stringify(action.payload))
-            state.user = action.payload
+            state.user = action.payload.data
         },
         [login.rejected]: (state, action) => {
             state.status = "failed"
@@ -51,19 +50,6 @@ const user = createSlice({
         },
     },
     reducers: {
-        // signup: async(state, action) => {
-        //     const { data } = await api.signUp(action.payload)
-        //     console.log(data.data);
-
-        //     localStorage.setItem('profile', JSON.stringify({...data }))
-        //     state.user = data.data
-        // },
-        // signin: async(state, action) => {
-        //     // const { data } = await api.signIn(action.payload)
-        //     // console.log(data.data);
-        //     localStorage.setItem('profile', JSON.stringify(...action.payload))
-        //     state.user = action.payload
-        // },
         logout: (state, action) => {
             localStorage.clear()
             state.user = null
@@ -75,4 +61,3 @@ const { reducer, actions } = user
 export const { logout } = actions
 export default reducer
 
-// export default user.reducer

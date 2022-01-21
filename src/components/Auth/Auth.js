@@ -6,7 +6,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import useStyles from './styles'
 import Input from './Input';
-import Icon from './icon'
 import fakebookImg from '../../images/fakebook.png'
 import { signup, login } from '../redux/reducerSlice/userSlice.js'
 

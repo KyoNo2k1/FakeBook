@@ -104,7 +104,7 @@ export default function Navbar({user,setUser}) {
             <Box className={classes.middleLocation} id="boxIcon">
             {
               middleIcon.map((className,index) => (
-                  <Link to={middleIconLink[index]}>
+                  <Link key={index} to={middleIconLink[index]}>
                     <div className={classes.middleIcon} key={index} onClick={() => setActiveIcon(index)}>
                       <i className={className} style={{fontSize:"2rem", width: "36px"}}></i>
                     </div>

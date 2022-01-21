@@ -33,7 +33,7 @@ function FriendList() {
             <Paper variant='outlined' className={classes.friendListInfo}>
             {
                 listFriendName.map((name, index) => (
-                    <React.Fragment>
+                    <React.Fragment key={index}>
                         <ListItem button className={classes.listFriend} key={index}>
                             <ListItemIcon>
                                 <Avatar alt="Nghia" src={listFriendAvatar[index]} />

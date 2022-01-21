@@ -16,6 +16,7 @@ function App() {
         <Route path="/" exact element={<Navigate to="/login" />} />
         <Route path="/home" exact element={<Home user={user} setUser={setUser}/>}/>
         <Route path="/login" exact element={!user ? <Auth/> : <Navigate to="/home"/>}/>
+        <Route path="*" exact element={!user ? <Auth/> : <Navigate to="/home"/>}/>
       </Routes>
     </BrowserRouter>
   );
