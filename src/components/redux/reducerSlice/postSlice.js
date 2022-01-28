@@ -83,11 +83,9 @@ const posts = createSlice({
         },
         [currentLikePost.pending]: (state, action) => {
             state.statusLike = "LIKE_LOADING"
-            console.log("err pending current like post");
         },
         [currentLikePost.fulfilled]: (state, action) => {
             state.statusLike = "LIKE_SUCCESS"
-            console.log(action.payload);
             state.likeList = action.payload
         },
         [currentLikePost.rejected]: (state, action) => {

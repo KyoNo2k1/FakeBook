@@ -22,7 +22,7 @@ function Auth({ setUser }) {
     const handleSubmit = async(e) => {
         e.preventDefault()
         if (isSignup) {
-            if (e.target[6].value === e.target[9].value) {
+            if (e.target[6]?.value === e.target[9]?.value) {
                 dispatch(signup(formData))
                 setTimeout(() => navigate('../'), 3000)
             } else {

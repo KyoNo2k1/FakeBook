@@ -21,7 +21,8 @@ export default makeStyles({
         borderRadius: '15px',
         height: '100%',
         position: 'relative',
-        backgroundColor: '#e0e0e0'
+        backgroundColor: '#e0e0e0',
+        overflow: 'visible'
     },
     avatar: {
         backgroundColor: 'blue',
@@ -32,7 +33,6 @@ export default makeStyles({
         paddingTop: '56.25%', // 16:9
     },
     divider: {
-        // Theme Color, or use css color in quote
         background: '#f50057',
     },
     iconPost: {
@@ -43,7 +43,9 @@ export default makeStyles({
             color: '#00ada6',
             textDecoration: 'none',
             cursor: 'pointer'
-          },
+        },
+    },
+    commentSpace: {
 
     }
 });

@@ -1,29 +1,26 @@
 import React, {useState, useEffect} from 'react'
-import {Card , CardActions, CardContent, CardMedia, Button, Typography, ButtonBase, CardHeader, Avatar, IconButton, Divider, Link} from '@material-ui/core'
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import moment from 'moment'
-import axios from 'axios'
 
+import Comment from './Comment/Comment.js'
+import {Card , CardActions, CardContent, CardMedia, Button, Typography, ButtonBase, CardHeader, Avatar, IconButton, Divider, Link} from '@material-ui/core'
 import useStyles from './styles'
 import userImg from '../../../../images/avatar.png'
 import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import ReplyIcon from '@material-ui/icons/Reply';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {likePost} from '../../../redux/reducerSlice/postSlice.js'
 
 const Post = ({post,postId,likeList}) => {
     const classes = useStyles()
     const dispatch = useDispatch()
-    const { statusLike } = useSelector((store) => {
-        return store.posts
-    })
     const [isLiked, setIsLiked] = useState(false)
     const [numberLike, setNumberLike] = useState(post.likes)
     useEffect(() => {
-        if(likeList.includes(postId)) {
+        if(likeList?.includes(postId)) {
             setIsLiked(true)
         }
         else setIsLiked(false)
@@ -38,9 +35,15 @@ const Post = ({post,postId,likeList}) => {
         if(!isLiked) setNumberLike(numberLike + 1)
         else setNumberLike(numberLike - 1)
     }
-    // useEffect(() => {
 
-    // }.[likes])
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(anchorEl ? null : event.currentTarget);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'transitions-popper' : undefined;
 
     return(
         <Card className={classes.card} raised elevation={6} variant="outlined">
@@ -73,13 +76,16 @@ const Post = ({post,postId,likeList}) => {
                                 <ThumbUpAltOutlinedIcon fontSize="small" id="likeButton"/>
                 } &nbsp; {numberLike} Like
                 </Link>
-                <Link to={'/'} className={classes.iconPost}>
+                <Link to={'/'} className={classes.iconPost} onClick={handleClick}>
                     <ChatBubbleOutlineIcon fontSize="small" /> &nbsp; Comment
                 </Link>
                 <Link to={'/'} className={classes.iconPost}>
                     <ReplyIcon fontSize="small" /> &nbsp; Share
                 </Link>
             </CardActions>
+            <div className={classes.commentSpace}>
+                <Comment postId={postId}/>
+            </div>
         </Card>
     )
 }
