@@ -19,9 +19,6 @@ function Form({userName,setOpenForm}) {
         e.preventDefault()
         dispatch(createPost(postData))
         setOpenForm(false)
-        setTimeout(() => {
-            dispatch(reload())
-        },3000)
     }
     const clear = () => {
         setPostData({  message: '', selectedFile: [] })

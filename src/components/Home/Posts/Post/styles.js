@@ -7,6 +7,7 @@ export default makeStyles({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         backgroundBlendMode: 'darken',
         marginBottom: 5,
+        objectFit: "contain"
     },
     border: {
         border: 'solid',
@@ -22,7 +23,17 @@ export default makeStyles({
         height: '100%',
         position: 'relative',
         backgroundColor: '#e0e0e0',
-        overflow: 'visible'
+        overflow: 'hidden'
+    },
+    cardHeaderName: {
+        fontSize: '1rem',
+        fontWeight: 600,
+        '&:hover': {
+            textDecoration: "underline",
+        },
+    },
+    cardContent: {
+        paddingTop: '0px'
     },
     avatar: {
         backgroundColor: 'blue',

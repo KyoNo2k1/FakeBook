@@ -10,7 +10,7 @@ API.interceptors.request.use((req) => {
 })
 export const fetchPost = (id) => API.get(`/posts`)
 export const createPost = (newPosts) => API.post('/posts', newPosts)
-export const getPosts = () => API.get('/posts')
+export const getPosts = (page) => API.get(`/posts?page=${page}`)
 export const likePost = (dataLike) => API.post('/posts/likePost',dataLike)
 export const currentLikePost = (emailUser) => API.get('/posts/currentLikePost',emailUser)
 export const comment = (data) => API.post('/posts/comment', data)

@@ -11,7 +11,9 @@ export default makeStyles(theme => ({
     },
     avatar: {
         backgroundColor: 'blue',
-        border: '1px solid'
+        border: '1px solid',
+        height: "30px",
+        width: "30px"
     },
     commentBody: {
         display: "flex",
@@ -19,19 +21,27 @@ export default makeStyles(theme => ({
         padding: "3px 10px",
     },
     commentBodyImg: {
-
+        height: "30px",
+        width: "30px"
     },
     commentBodyInfo: {
         display: "block",
+        marginLeft: "5px",
+        maxWidth: "90%"
+    },
+    commentBodyInfoHeader:{
+        borderRadius: "10px",
         backgroundColor: "#e0e0e0",
         padding: "5px 10px 7px",
-        marginLeft: "5px",
-        borderRadius: "10px",
-        maxWidth: "90%"
+
     },
     commentBodyInfoName: {
         marginBottom: "10px",
         fontSize: "1rem",
+        fontWeight: 600,
+        '&:hover': {
+            textDecoration: "underline",
+        },
     },
     commentBodyInfoMessage: {
         paddingTop: "3px",
@@ -53,5 +63,14 @@ export default makeStyles(theme => ({
         position: 'absolute',
         top: "-5px",
         zIndex: "10",
-    }
+    },
+    miniBtnCmt: {
+        fontSize: '0.8rem',
+        margin: '0 8px',
+        cursor: 'pointer',
+        fontWeight:  600,
+        '&:hover': {
+            textDecoration: 'underline',
+        }
+    },
 }))

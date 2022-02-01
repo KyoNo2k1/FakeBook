@@ -56,18 +56,21 @@ const Post = ({post,postId,likeList}) => {
                         <MoreHorizIcon />
                     </IconButton>
                 }
-                title={post.nameAuthor}
+                title={
+                    <Link href="#" color="inherit" underline="none" className={classes.cardHeaderName}>
+                        {post.nameAuthor}
+                    </Link>}
                 subheader={moment(post.createdAt).format('DD-MM-YYYY')+ " lúc " + moment(post.createdAt).get('hour')+":"+moment(post.createdAt).get('minute')}
-            />
-            <CardContent>
+                subheaderTypographyProps={{variant: 'subtitle2'}}
+                />
+            <CardContent classes={{
+                root: classes.cardContent,
+            }}>
                 <Typography variant="body2" color="textSecondary" component="p">
                 {post.message}
                 </Typography>
             </CardContent>
-            {<CardMedia
-                className={classes.media}
-                image={post.selectedFile}
-            />}
+            <img src={post.selectedFile} />
             <Divider classes={{root: classes.divider}} variant="middle" />
             <CardActions disableSpacing style={{display: 'flex',justifyContent: 'space-between', padding: '10px 20px'}}>
                 <Link to={'/'} className={classes.iconPost} onClick={() => handleLikePost(postId)}>

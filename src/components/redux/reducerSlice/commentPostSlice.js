@@ -6,9 +6,19 @@ export const comment = createAsyncThunk(
     async(data, { rejectWithValue }) => {
         const response = await api.comment(data)
         if (response?.data?.data == null) {
-            return rejectWithValue(response);
+            return rejectWithValue("null");
         }
         return response?.data?.data
+    }
+);
+export const currentCommentPost = createAsyncThunk(
+    "posts/commentPost",
+    async(postId, { rejectWithValue }) => {
+        const response = await api.getCommentPost(postId)
+        if (response?.data?.result == null) {
+            return rejectWithValue(response);
+        }
+        return response?.data?.result
     }
 );
 
@@ -17,28 +27,29 @@ const comments = createSlice({
     initialState: {
         comments: [],
         status: "loading",
+        statusPost: "loading",
     },
     extraReducers: {
         [comment.pending]: (state, action) => {
-            state.status = "COMMENT_LOADING"
+            state.statusPost = "COMMENT_LOADING"
         },
         [comment.fulfilled]: (state, action) => {
-            state.status = "COMMENT_SUCCESS"
+            state.statusPost = "COMMENT_SUCCESS"
             state.comments.unshift(action.payload.data)
         },
         [comment.rejected]: (state, action) => {
-            state.status = "COMMENT_FAILED"
+            state.statusPost = "COMMENT_FAILED"
         },
-        // [currentLikePost.pending]: (state, action) => {
-        //     state.statusLike = "LIKE_LOADING"
-        // },
-        // [currentLikePost.fulfilled]: (state, action) => {
-        //     state.statusLike = "LIKE_SUCCESS"
-        //     state.likeList = action.payload
-        // },
-        // [currentLikePost.rejected]: (state, action) => {
-        //     state.statusLike = "LIKE_FAILED"
-        // },
+        [currentCommentPost.pending]: (state, action) => {
+            state.status = "GETCOMMENT_LOADING"
+        },
+        [currentCommentPost.fulfilled]: (state, action) => {
+            state.status = "GETCOMMENT_SUCCESS"
+            state.comments = action.payload
+        },
+        [currentCommentPost.rejected]: (state, action) => {
+            state.status = "GETCOMMENT_FAILED"
+        },
     },
     reducers: {
         
