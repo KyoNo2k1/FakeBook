@@ -11,6 +11,9 @@ export default makeStyles((theme) => ({
     actionDiv: {
         textAlign: 'center',
     },
+    container: {
+        // borderRadius: "20px"
+    },
     item: {
         marginBottom: "20px"
     }

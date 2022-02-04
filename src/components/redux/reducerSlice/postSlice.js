@@ -5,7 +5,6 @@ export const createPost = createAsyncThunk(
     "posts/createPost",
     async(data, { rejectWithValue }) => {
         const response = await api.createPost(data)
-        console.log(response);
         if (response.data == null) {
             return rejectWithValue(response);
         }
@@ -20,7 +19,7 @@ export const getPosts = createAsyncThunk(
         if (response?.data?.result == null) {
             return rejectWithValue(response);
         }
-        return response?.data?.result;
+        return response?.data;
     }
 );
 export const likePost = createAsyncThunk(
@@ -51,6 +50,7 @@ const posts = createSlice({
         status: "loading",
         statusLike:"",
         likeList:[],
+        limit: null,
     },
     extraReducers: {
         [getPosts.pending]: (state, action) => {
@@ -58,7 +58,8 @@ const posts = createSlice({
         },
         [getPosts.fulfilled]: (state, action) => {
             state.status = "SUCCESS"
-            state.posts = action.payload
+            state.posts = action.payload.result
+            state.limit = action.payload.limit
         },
         [getPosts.rejected]: (state, action) => {
             state.status = "FAILED"

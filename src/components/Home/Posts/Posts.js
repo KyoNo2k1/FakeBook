@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Grid } from '@material-ui/core'
+import { Box } from '@material-ui/core'
 import { useSelector,useDispatch } from 'react-redux'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -8,6 +8,7 @@ import useStyles from './styles'
 import FormPost from './FormPost/FormPost';
 import CircularProgress from '../../CircularProgress/CircularProgress.js'
 import { getPosts, currentLikePost } from '../../redux/reducerSlice/postSlice.js'
+import { currentCommentPost } from '../../redux/reducerSlice/commentPostSlice'
 
 
 
@@ -15,9 +16,10 @@ const Posts = ({user}) => {
     const [hasMore, setHasMore] = useState(true)
     const [page, setPage] = useState(2)
 
-    const {posts , status, likeList } = useSelector((store) => {
+    const {posts , status, likeList, limit } = useSelector((store) => {
         return store.posts
     })
+
     const [currentPost, setCurrentPost] = useState(posts)
     const classes = useStyles()
 
@@ -32,17 +34,29 @@ const Posts = ({user}) => {
             if(posts) setCurrentPost([...currentPost,...posts])
         }
     },[posts])
+    useEffect(() => {
+        if(status === 'SUCCESS'){
+            var arrPostId = []
+            posts.map(post =>{
+                arrPostId.push(post.id)
+            })
+            var newArr = {
+                postId: `(${arrPostId.toString()})`
+            }
+            setTimeout(() => {
+                dispatch(currentCommentPost(newArr))
+            },500)
+        }
+    },[status])
 
     const fetchData =() => {
         console.log(posts);
         dispatch(getPosts(page))
-        if(posts.length === 0 || posts.length < 5){
-            console.log("stop");
+        if(posts.length === 0 || posts.length < limit){
             setHasMore(false)
         }
         setPage(page + 1)
     }
-    console.log(currentPost);
     return(
         <React.Fragment>
             <FormPost/>

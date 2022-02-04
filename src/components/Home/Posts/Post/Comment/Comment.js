@@ -1,5 +1,6 @@
 import { Avatar, Box, Divider, Link, Paper, TextField } from '@material-ui/core';
 import React, { useState, useRef, useEffect } from 'react';
+import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { comment,currentCommentPost } from '../../../../redux/reducerSlice/commentPostSlice'
@@ -9,14 +10,20 @@ import Picker, { SKIN_TONE_MEDIUM_DARK } from 'emoji-picker-react';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 
 function Comment({postId}) {
+    const { comments, status } = useSelector(store => store.comments)
+    const [currentCmtArr, setCurrentCmtArr] = useState()
+    useEffect(() => {
+        console.log(comments);
+        const arrCmt = comments.filter(comment => comment.postId === postId)
+        setCurrentCmtArr(arrCmt)
+    },[comments])
+
     const classes = useStyles()
     const [cmt, setCmt] = useState()
     const [emojiBtn, setEmojiBtn] = useState(false)
     const inputRef = useRef()
     const dispatch = useDispatch()
-    const { comments } = useSelector(store => store.comments)
 
-    // console.log(postId,comments)
     const onEmojiClick =async (event, emojiObject) => {
         inputRef.current.value = cmt + emojiObject.emoji
         setCmt(inputRef.current.value)
@@ -34,9 +41,9 @@ function Comment({postId}) {
                 postId: postId,
                 message:inputRef.current.value
             }))
+            inputRef.current.value = ''
         }
     }
-
     return (
         <>
             <Divider classes={{root: classes.divider}} variant="middle" />
@@ -66,26 +73,28 @@ function Comment({postId}) {
                 </div>
             </Paper>
             {
-                comments?.length > 0 ?
-                <Paper className={classes.commentBody}>
-                    <div className={classes.commentBodyImg}>
-                        <Avatar aria-label="recipe" className={classes.avatar} src={userImg}  />
-                    </div>
-                    <Box component='div' className={classes.commentBodyInfo}>
-                        <Box component='div' className={classes.commentBodyInfoHeader}>
-                            <Link href="#" color="inherit" underline="none" className={classes.commentBodyInfoName}>
-                                Trung Nghia
-                            </Link>
-                            <div className={classes.commentBodyInfoMessage}>helloaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                        </Box>
-                        <Box>
-                            <a className={classes.miniBtnCmt}>Like</a>
-                            <a className={classes.miniBtnCmt}>Reply</a>
-                            <span style={{fontSize: '0.7rem'}}>10h50</span>
-                        </Box>
-                    </Box>
-                </Paper>
-                : null
+                currentCmtArr?.map((cmtMessage,index) => {
+                    return (
+                        <Paper className={classes.commentBody} key={index}>
+                            <div className={classes.commentBodyImg}>
+                                <Avatar aria-label="recipe" className={classes.avatar} src={userImg}  />
+                            </div>
+                            <Box component='div' className={classes.commentBodyInfo}>
+                                <Box component='div' className={classes.commentBodyInfoHeader}>
+                                    <Link href="#" color="inherit" underline="none" className={classes.commentBodyInfoName}>
+                                        {cmtMessage.emailUser}
+                                    </Link>
+                                    <div className={classes.commentBodyInfoMessage}>{cmtMessage.message}</div>
+                                </Box>
+                                <Box>
+                                    <a className={classes.miniBtnCmt}>Like</a>
+                                    <a className={classes.miniBtnCmt}>Reply</a>
+                                    <span style={{fontSize: '0.7rem'}}>{moment(cmtMessage.createdAt).format('DD-MM-YYYY')+ " lúc " + moment(cmtMessage.createdAt).get('hour')+":"+moment(cmtMessage.createdAt).get('minute')}</span>
+                                </Box>
+                            </Box>
+                        </Paper>
+                    )
+                })
             }
         </>
     )

@@ -2,9 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from '../../../app/api.js'
 
 export const comment = createAsyncThunk(
-    "posts/comment",
+    "comments/comment",
     async(data, { rejectWithValue }) => {
         const response = await api.comment(data)
+        console.log(response?.data?.data);
         if (response?.data?.data == null) {
             return rejectWithValue("null");
         }
@@ -12,9 +13,9 @@ export const comment = createAsyncThunk(
     }
 );
 export const currentCommentPost = createAsyncThunk(
-    "posts/commentPost",
-    async(postId, { rejectWithValue }) => {
-        const response = await api.getCommentPost(postId)
+    "comments/currentCommentPost",
+    async(data, { rejectWithValue }) => {
+        const response = await api.getCommentByPage(data)
         if (response?.data?.result == null) {
             return rejectWithValue(response);
         }
@@ -35,7 +36,7 @@ const comments = createSlice({
         },
         [comment.fulfilled]: (state, action) => {
             state.statusPost = "COMMENT_SUCCESS"
-            state.comments.unshift(action.payload.data)
+            state.comments.push(action.payload)
         },
         [comment.rejected]: (state, action) => {
             state.statusPost = "COMMENT_FAILED"
@@ -44,8 +45,8 @@ const comments = createSlice({
             state.status = "GETCOMMENT_LOADING"
         },
         [currentCommentPost.fulfilled]: (state, action) => {
-            state.status = "GETCOMMENT_SUCCESS"
             state.comments = action.payload
+            state.status = "GETCOMMENT_SUCCESS"
         },
         [currentCommentPost.rejected]: (state, action) => {
             state.status = "GETCOMMENT_FAILED"

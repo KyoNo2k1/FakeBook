@@ -2,14 +2,16 @@ import React, {useState, useEffect} from 'react'
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import moment from 'moment'
+import clsx from 'clsx'
 
 import Comment from './Comment/Comment.js'
-import {Card , CardActions, CardContent, CardMedia, Button, Typography, ButtonBase, CardHeader, Avatar, IconButton, Divider, Link} from '@material-ui/core'
+import {Card , CardActions, CardContent, Typography, CardHeader, Avatar, IconButton, Divider, Link} from '@material-ui/core'
 import useStyles from './styles'
 import userImg from '../../../../images/avatar.png'
 import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import ReplyIcon from '@material-ui/icons/Reply';
 import { useDispatch } from 'react-redux'
 import {likePost} from '../../../redux/reducerSlice/postSlice.js'
@@ -18,6 +20,8 @@ const Post = ({post,postId,likeList}) => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const [isLiked, setIsLiked] = useState(false)
+    const [isComment, setIsComment] = useState(false)
+    const [commentCss, setCommentCss] = useState(true);
     const [numberLike, setNumberLike] = useState(post.likes)
     useEffect(() => {
         if(likeList?.includes(postId)) {
@@ -25,7 +29,7 @@ const Post = ({post,postId,likeList}) => {
         }
         else setIsLiked(false)
     },[likeList])
-
+    
     const handleLikePost = (postId) => {
         dispatch(likePost({
             userLiking: JSON.parse(localStorage.getItem('profile')).data,
@@ -36,14 +40,11 @@ const Post = ({post,postId,likeList}) => {
         else setNumberLike(numberLike - 1)
     }
 
-    const [anchorEl, setAnchorEl] = useState(null);
 
-    const handleClick = (event) => {
-        setAnchorEl(anchorEl ? null : event.currentTarget);
+    const handleClick = () => {
+        setIsComment(!isComment)
+        setCommentCss(!commentCss)
     };
-
-    const open = Boolean(anchorEl);
-    const id = open ? 'transitions-popper' : undefined;
 
     return(
         <Card className={classes.card} raised elevation={6} variant="outlined">
@@ -80,15 +81,26 @@ const Post = ({post,postId,likeList}) => {
                 } &nbsp; {numberLike} Like
                 </Link>
                 <Link to={'/'} className={classes.iconPost} onClick={handleClick}>
-                    <ChatBubbleOutlineIcon fontSize="small" /> &nbsp; Comment
+                {
+                    isComment ?
+                    <ChatBubbleIcon fontSize="small" />
+                    :
+                    <ChatBubbleOutlineIcon fontSize="small" />
+                }&nbsp; Comment
                 </Link>
                 <Link to={'/'} className={classes.iconPost}>
                     <ReplyIcon fontSize="small" /> &nbsp; Share
                 </Link>
             </CardActions>
-            <div className={classes.commentSpace}>
-                <Comment postId={postId}/>
-            </div>
+            {
+                isComment ?
+                <div className={clsx(classes.commentSpace, classes.animatedItem, {
+                    [classes.animatedItemExiting]: commentCss
+                })}>
+                    <Comment postId={postId}/>
+                </div>
+                : null
+            }
         </Card>
     )
 }

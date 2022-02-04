@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles({
+export default makeStyles(theme => ({
     media: {
         height: 0,
         paddingTop: '56.25%',
@@ -56,7 +56,36 @@ export default makeStyles({
             cursor: 'pointer'
         },
     },
+    animatedItem: {
+        animation: `$myEffect 1000ms ${theme.transitions.easing.easeInOut}`
+    },
+    animatedItemExiting: {
+        animation: `$myEffectExit 1000ms ${theme.transitions.easing.easeInOut}`,
+        opacity: 0,
+        transform: "translateY(-100%)"
+    },
+    "@keyframes myEffect": {
+        "0%": {
+            opacity: 0,
+            transform: "translateY(-100%)"
+        },
+        "100%": {
+            opacity: 1,
+            transform: "translateY(0)"
+        }
+    },
+    "@keyframes myEffectExit": {
+        "0%": {
+            opacity: 1,
+            transform: "translateY(0)"
+        },
+        "100%": {
+            opacity: 0,
+            transform: "translateY(-100%)"
+        }
+    },
     commentSpace: {
-
+        borderRadius: "0 0 15px 15px",
+        overflow: "hidden"
     }
-});
+}));
