@@ -12,6 +12,8 @@ API.interceptors.request.use((req) => {
 export const fetchPost = (id) => API.get(`/posts`)
 export const createPost = (newPosts) => API.post('/posts', newPosts)
 export const getPosts = (page) => API.get(`/posts?page=${page}`)
+export const deletePost = (postId) => API.delete(`/posts/delete/${postId}`)
+
     //like
 export const likePost = (dataLike) => API.post('/posts/likePost',dataLike)
 export const currentLikePost = () => API.get('/posts/currentLikePost')
@@ -21,5 +23,7 @@ export const getCommentByPage = (data) => API.post('/posts/getCommentByPage',dat
     //auth
 export const signIn = (formData) => API.post('/users/signin', formData)
 export const signUp = (formData) => API.post('/users/signup', formData)
+export const isAuthor = (postId) => API.post('/posts/auth', postId)
+
 
 

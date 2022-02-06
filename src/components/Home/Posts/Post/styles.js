@@ -23,7 +23,6 @@ export default makeStyles(theme => ({
         height: '100%',
         position: 'relative',
         backgroundColor: '#e0e0e0',
-        overflow: 'hidden'
     },
     cardHeaderName: {
         fontSize: '1rem',
@@ -67,11 +66,11 @@ export default makeStyles(theme => ({
     "@keyframes myEffect": {
         "0%": {
             opacity: 0,
-            transform: "translateY(-100%)"
+            transform: "translateX(-50%)"
         },
         "100%": {
             opacity: 1,
-            transform: "translateY(0)"
+            transform: "translateX(0)"
         }
     },
     "@keyframes myEffectExit": {
@@ -81,11 +80,20 @@ export default makeStyles(theme => ({
         },
         "100%": {
             opacity: 0,
-            transform: "translateY(-100%)"
+            transform: "translateY(-50%)"
         }
     },
     commentSpace: {
         borderRadius: "0 0 15px 15px",
-        overflow: "hidden"
+        // overflow: "hidden"
+    },
+    settingPost: {
+        display: "block",
+        backgroundColor: "#dddddd",
+        borderRadius: "10px",
+    },
+    settingPostBtn: {
+        fontWeight: "500",
+        padding: "8px 10px",
     }
 }));

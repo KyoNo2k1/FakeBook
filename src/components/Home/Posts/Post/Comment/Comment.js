@@ -8,7 +8,7 @@ import useStyles from './styles'
 import userImg from '../../../../../images/avatar.png'
 import Picker, { SKIN_TONE_MEDIUM_DARK } from 'emoji-picker-react';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
-
+import EmojiEmotionsOutlinedIcon from '@material-ui/icons/EmojiEmotionsOutlined';
 function Comment({postId}) {
     const { comments, status } = useSelector(store => store.comments)
     const [currentCmtArr, setCurrentCmtArr] = useState()
@@ -25,8 +25,11 @@ function Comment({postId}) {
     const dispatch = useDispatch()
 
     const onEmojiClick =async (event, emojiObject) => {
-        inputRef.current.value = cmt + emojiObject.emoji
-        setCmt(inputRef.current.value)
+        if (inputRef.current.value == '') inputRef.current.value = emojiObject.emoji
+        else {
+            inputRef.current.value = cmt + emojiObject.emoji
+            setCmt(inputRef.current.value)
+        }
     };
 
     const inputCmt = (e) => {
@@ -42,6 +45,8 @@ function Comment({postId}) {
                 message:inputRef.current.value
             }))
             inputRef.current.value = ''
+            setCmt('')
+            setEmojiBtn(false)
         }
     }
     return (
@@ -63,10 +68,14 @@ function Comment({postId}) {
                 }}
                 />
                 <div className={classes.emojiCmt}>
-                    <EmojiEmotionsIcon onClick={() => setEmojiBtn(!emojiBtn) }/>
+                {
+                    emojiBtn ?
+                    <EmojiEmotionsIcon onClick={() => setEmojiBtn(!emojiBtn)} className={classes.emojiCmtIcon}/>
+                    : <EmojiEmotionsOutlinedIcon onClick={() => setEmojiBtn(!emojiBtn)} className={classes.emojiCmtIcon}/>
+                }
                     {
                         emojiBtn ?
-                            <Picker onEmojiClick={onEmojiClick} skinTone={SKIN_TONE_MEDIUM_DARK} pickerStyle={{position: "absolute",zIndex: 1,top: "1.5em"}}/>
+                            <Picker onEmojiClick={onEmojiClick} skinTone={SKIN_TONE_MEDIUM_DARK} pickerStyle={{position: "absolute",zIndex: 100,top:"35px", left: "200px"}}/>
                         :
                         null
                     }

@@ -5,7 +5,7 @@ import moment from 'moment'
 import clsx from 'clsx'
 
 import Comment from './Comment/Comment.js'
-import {Card , CardActions, CardContent, Typography, CardHeader, Avatar, IconButton, Divider, Link} from '@material-ui/core'
+import {Card , CardActions, CardContent, Typography, CardHeader, Avatar, IconButton, Divider, Link, Popper, Fade, Button, Paper} from '@material-ui/core'
 import useStyles from './styles'
 import userImg from '../../../../images/avatar.png'
 import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
@@ -13,8 +13,8 @@ import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import ReplyIcon from '@material-ui/icons/Reply';
-import { useDispatch } from 'react-redux'
-import {likePost} from '../../../redux/reducerSlice/postSlice.js'
+import { useDispatch , useSelector } from 'react-redux'
+import {likePost , deletePost, authorPost} from '../../../redux/reducerSlice/postSlice.js'
 
 const Post = ({post,postId,likeList}) => {
     const classes = useStyles()
@@ -23,13 +23,16 @@ const Post = ({post,postId,likeList}) => {
     const [isComment, setIsComment] = useState(false)
     const [commentCss, setCommentCss] = useState(true);
     const [numberLike, setNumberLike] = useState(post.likes)
+
     useEffect(() => {
         if(likeList?.includes(postId)) {
             setIsLiked(true)
         }
         else setIsLiked(false)
     },[likeList])
-    
+    useEffect(() => {
+        dispatch(authorPost(postId))
+    },[])
     const handleLikePost = (postId) => {
         dispatch(likePost({
             userLiking: JSON.parse(localStorage.getItem('profile')).data,
@@ -40,11 +43,28 @@ const Post = ({post,postId,likeList}) => {
         else setNumberLike(numberLike - 1)
     }
 
-
-    const handleClick = () => {
+    const handleClickCmt = () => {
         setIsComment(!isComment)
         setCommentCss(!commentCss)
+    }
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [moreIcon, setMoreIcon] = useState(false);
+
+    const handleClickMenu = (event) => {
+        setAnchorEl(anchorEl ? null : event.currentTarget);
+        setMoreIcon(!moreIcon)
     };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'transitions-popper' : undefined;
+
+    const handleDeletePost = () => {
+        console.log(postId);
+        dispatch(deletePost(postId))
+        setAnchorEl(null)
+        setMoreIcon(false)
+    }
 
     return(
         <Card className={classes.card} raised elevation={6} variant="outlined">
@@ -53,9 +73,32 @@ const Post = ({post,postId,likeList}) => {
                     <Avatar aria-label="recipe" className={classes.avatar} src={userImg}  />
                 }
                 action={
-                    <IconButton aria-label="settings">
-                        <MoreHorizIcon />
-                    </IconButton>
+                    <div>
+                    {
+                        moreIcon ?
+                            <IconButton aria-label="settings" style={{backgroundColor: '#c5c5c5'}} aria-describedby={id} onClick={handleClickMenu}>
+                                <MoreHorizIcon/>
+                            </IconButton>
+                        :
+                            <IconButton aria-label="settings" aria-describedby={id} onClick={handleClickMenu}>
+                                <MoreHorizIcon/>
+                            </IconButton>
+                    }
+                        <Popper id={id} open={open} anchorEl={anchorEl} transition placement='bottom-end'>
+                            {({ TransitionProps }) => (
+                            <Fade {...TransitionProps} timeout={350}>
+                                <Paper className={classes.settingPost} elevation={6}>
+                                    <Typography>
+                                        <Button fullWidth size="small" color="secondary" className={classes.settingPostBtn}>Chỉnh sửa</Button>
+                                    </Typography>
+                                    <Typography>
+                                        <Button fullWidth size="small" color="secondary" className={classes.settingPostBtn} onClick={handleDeletePost}>Xóa</Button>
+                                    </Typography>
+                                </Paper>
+                            </Fade>
+                            )}
+                        </Popper>
+                    </div>
                 }
                 title={
                     <Link href="#" color="inherit" underline="none" className={classes.cardHeaderName}>
@@ -80,7 +123,7 @@ const Post = ({post,postId,likeList}) => {
                                 <ThumbUpAltOutlinedIcon fontSize="small" id="likeButton"/>
                 } &nbsp; {numberLike} Like
                 </Link>
-                <Link to={'/'} className={classes.iconPost} onClick={handleClick}>
+                <Link to={'/'} className={classes.iconPost} onClick={handleClickCmt}>
                 {
                     isComment ?
                     <ChatBubbleIcon fontSize="small" />

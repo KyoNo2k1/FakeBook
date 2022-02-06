@@ -7,7 +7,8 @@ export default makeStyles(theme => ({
     commentHeader: {
         backgroundColor: "#efe4ff",
         display: "flex",
-        padding: "3px 10px"
+        padding: "3px 10px",
+        position: "relative"
     },
     avatar: {
         backgroundColor: 'blue',
@@ -57,12 +58,8 @@ export default makeStyles(theme => ({
     emojiCmt: {
         display: 'inline-block',
         margin: 'auto 2px',
-        position: 'relative'
-    },
-    emojiCmtIcon: {
-        position: 'absolute',
-        top: "-5px",
-        zIndex: "10",
+        cursor: 'pointer',
+        color: '#3f51b5',
     },
     miniBtnCmt: {
         fontSize: '0.8rem',

@@ -16,20 +16,21 @@ const Posts = ({user}) => {
     const [hasMore, setHasMore] = useState(true)
     const [page, setPage] = useState(2)
 
-    const {posts , status, likeList, limit } = useSelector((store) => {
+    const {posts , status, likeList, limit,statusDelete } = useSelector((store) => {
         return store.posts
     })
-
+    console.log(posts,status);
     const [currentPost, setCurrentPost] = useState(posts)
     const classes = useStyles()
 
     const dispatch = useDispatch()
     useEffect(() => {
+        window.history.scrollRestoration = 'manual'
         dispatch(getPosts(1))
         dispatch(currentLikePost())
     },[])
     useEffect(() => {
-        if(status === 'CREATE_SUCCESS') setCurrentPost(posts)
+        if(status === 'CREATE_SUCCESS' || statusDelete === 'SUCCESS') setCurrentPost(posts)
         else {
             if(posts) setCurrentPost([...currentPost,...posts])
         }

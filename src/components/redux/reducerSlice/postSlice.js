@@ -36,21 +36,48 @@ export const currentLikePost = createAsyncThunk(
     "posts/currentLikePost",
     async(emailUser, { rejectWithValue }) => {
         const response = await api.currentLikePost()
-        if (!response) {
+        if (!response?.data?.result) {
             return rejectWithValue(response);
         }
         return response?.data?.result;
+    }
+);
+export const deletePost = createAsyncThunk(
+    "posts/deletePost",
+    async(id, { rejectWithValue }) => {
+        const response = await api.deletePost(id)
+        if (!response?.data?.result) {
+            return rejectWithValue(response);
+        }
+        return ({
+            data: response?.data?.result,
+            postId: id
+        })
+    }
+);
+export const authorPost = createAsyncThunk(
+    "posts/currentLikePost",
+    async(postId, { rejectWithValue }) => {
+        const response = await api.isAuthor(postId)
+        if (!response) {
+            return rejectWithValue(response);
+        }
+        return response;
     }
 );
 
 const posts = createSlice({
     name: 'posts',
     initialState: {
-        posts: [],
         status: "loading",
         statusLike:"",
+        statusDelete: "loading",
+        statusCheckAuthor: "loading",
+        posts: [],
         likeList:[],
+        checkAuthor: [],
         limit: null,
+        isAuthor: false
     },
     extraReducers: {
         [getPosts.pending]: (state, action) => {
@@ -92,6 +119,27 @@ const posts = createSlice({
         },
         [currentLikePost.rejected]: (state, action) => {
             state.statusLike = "LIKE_FAILED"
+        },
+        [authorPost.pending]: (state, action) => {
+            state.statusCheckAuthor = "LOADING"
+        },
+        [authorPost.fulfilled]: (state, action) => {
+            state.statusCheckAuthor = "SUCCESS"
+            // state.posts.unshift(action.payload.data)
+        },
+        [authorPost.rejected]: (state, action) => {
+            state.statusCheckAuthor = "FAILED"
+        },
+        [deletePost.pending]: (state, action) => {
+            state.statusDelete = "LOADING"
+        },
+        [deletePost.fulfilled]: (state, action) => {
+            state.statusDelete = action.payload.data
+            state.posts = state.posts.filter(post => post.id !== action.payload.postId)
+            state.statusDelete = "SUCCESS"
+        },
+        [deletePost.rejected]: (state, action) => {
+            state.statusDelete = "FAILED"
         },
     },
     reducers: {
