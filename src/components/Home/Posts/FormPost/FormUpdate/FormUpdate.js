@@ -1,30 +1,39 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 import {createPost} from '../../../../redux/reducerSlice/postSlice.js'
 import { Box, Button, Divider, Paper, TextField, Typography } from '@material-ui/core'
 import FileBase from 'react-file-base64'
 import CloseIcon from '@material-ui/icons/Close';
+import { getPost,updatePost } from '../../../../redux/reducerSlice/postSlice'
 
 import useStyles from './styles'
-import { getPosts } from '../../../../redux/reducerSlice/postSlice';
 
-function Form({userName,setOpenForm}) {
-    const classes = useStyles()
-    const [postData, setPostData] = useState({ message: '', selectedFile: '' })
+function FormUpdate({postId, setOpenFormUpdate}) {
     const dispatch = useDispatch()
+    const [postData, setPostData] = useState({ message: '', selectedFile: '' })
+    const { postCreated } = useSelector((store) => {
+        return store.posts
+    })
+    useEffect(() => {
+        dispatch(getPost(postId))
+    },[])
+    useEffect(() => {
+        if(postCreated) setPostData({ message: postCreated?.message, selectedFile: postCreated?.selectedFile })
+    },[postCreated])
+
+    const classes = useStyles()
 
     const handleSubmit =(e) => {
         e.preventDefault()
-        dispatch(createPost(postData))
-        setOpenForm(false)
-        setTimeout(() => dispatch(getPosts(1)),200)
+        dispatch(updatePost({...postData,id: postId}))
+        setOpenFormUpdate(false)
     }
     const clear = () => {
         setPostData({  message: '', selectedFile: '' })
     }
     const handleCloseForm = () => {
-        setOpenForm(false)
+        setOpenFormUpdate(false)
         clear()
     }
 
@@ -32,7 +41,7 @@ function Form({userName,setOpenForm}) {
         <Paper className={classes.paper} elevation={6}>
             <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}}`} onSubmit={handleSubmit}>
                 <Box style={{display: 'flex',position: 'relative',justifyContent: "center", alignItems: 'center'}}>
-                    <Typography variant="h6" align="center">TẠO BÀI VIẾT</Typography>
+                    <Typography variant="h6" align="center">Chỉnh sửa bài viết</Typography>
                     <Button style={{position: "absolute", right: 0}} onClick={handleCloseForm}>
                         <CloseIcon />
                     </Button>
@@ -41,7 +50,6 @@ function Form({userName,setOpenForm}) {
                 <TextField
                     name="message"
                     variant="outlined"
-                    label={`${userName}, bạn đang nghĩ gì thế ?` }
                     fullWidth
                     value={postData.message}
                     onChange={(e) => setPostData({ ...postData, message: e.target.value})}
@@ -51,10 +59,6 @@ function Form({userName,setOpenForm}) {
                         type="file"
                         multiple={true}
                         onDone={(res) =>{
-                            // var arrImg = []
-                            // for (let i = 0; i < res.length; i++){
-                            //     arrImg.push(res[i].base64)
-                            // }
                             setPostData({ ...postData, selectedFile: res[0].base64})
                         }}
                     ></FileBase>
@@ -65,4 +69,4 @@ function Form({userName,setOpenForm}) {
     )
 }
 
-export default Form
+export default FormUpdate

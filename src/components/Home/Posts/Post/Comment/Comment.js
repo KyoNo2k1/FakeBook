@@ -13,7 +13,6 @@ function Comment({postId}) {
     const { comments, status } = useSelector(store => store.comments)
     const [currentCmtArr, setCurrentCmtArr] = useState()
     useEffect(() => {
-        console.log(comments);
         const arrCmt = comments.filter(comment => comment.postId === postId)
         setCurrentCmtArr(arrCmt)
     },[comments])

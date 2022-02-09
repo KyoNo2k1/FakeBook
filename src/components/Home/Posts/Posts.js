@@ -16,11 +16,10 @@ const Posts = ({user}) => {
     const [hasMore, setHasMore] = useState(true)
     const [page, setPage] = useState(2)
 
-    const {posts , status, likeList, limit,statusDelete } = useSelector((store) => {
+    const {post,posts , status, likeList, limit,statusDelete,statusCreate,postCreated } = useSelector((store) => {
         return store.posts
     })
-    console.log(posts,status);
-    const [currentPost, setCurrentPost] = useState(posts)
+    const [currentPost, setCurrentPost] = useState([])
     const classes = useStyles()
 
     const dispatch = useDispatch()
@@ -30,7 +29,21 @@ const Posts = ({user}) => {
         dispatch(currentLikePost())
     },[])
     useEffect(() => {
-        if(status === 'CREATE_SUCCESS' || statusDelete === 'SUCCESS') setCurrentPost(posts)
+        if (post){
+            var newArr = currentPost.map((updatePost) => {
+                if (updatePost.id === post.id){
+                    var newData = {...updatePost,...post}
+                    return newData
+                }
+                return updatePost
+            })
+            setCurrentPost(newArr)
+        }
+    },[post])
+    useEffect(() => {
+        if(statusDelete === 'SUCCESS' || statusCreate === 'CREATE_SUCCESS') {
+            setCurrentPost(posts)
+        }
         else {
             if(posts) setCurrentPost([...currentPost,...posts])
         }
@@ -51,9 +64,9 @@ const Posts = ({user}) => {
     },[status])
 
     const fetchData =() => {
-        console.log(posts);
+        console.log(page,status,posts);
         dispatch(getPosts(page))
-        if(posts.length === 0 || posts.length < limit){
+        if((posts.length === 0 || posts.length < limit) && statusDelete != 'SUCCESS'){
             setHasMore(false)
         }
         setPage(page + 1)
@@ -71,16 +84,20 @@ const Posts = ({user}) => {
                         loader={<CircularProgress/>}
                         endMessage={
                             <p style={{ textAlign: 'center' }}>
-                                <b>You have seen it all</b>
+                                <b>Bạn đã xem tất cả bài viết ~~~!!</b>
                             </p>
                         }
                         className={classes.infiniteScroll}
-                        scrollThreshold={0.9}
+                        scrollThreshold={0.7}
                         >
-                        {currentPost?.map((post, index) =>
-                            <Box className={classes.item} key={index} item xs={12} sm={12} lg={12}>
-                                <Post post={post} postId={post.id} likeList={likeList}/>
-                            </Box>
+                        {currentPost?.map((post, index) =>{
+                            // console.log(post);
+                            return (
+                                <Box className={classes.item} key={index} item xs={12} sm={12} lg={12}>
+                                    <Post post={post} postId={post.id} likeList={likeList}/>
+                                </Box>
+                            )
+                        }
                         )}
                     </InfiniteScroll>
                 </Box>
