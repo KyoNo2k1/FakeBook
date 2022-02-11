@@ -12,13 +12,14 @@ import { currentCommentPost } from '../../redux/reducerSlice/commentPostSlice'
 
 
 
-const Posts = ({user}) => {
+const Posts = () => {
     const [hasMore, setHasMore] = useState(true)
     const [page, setPage] = useState(2)
 
     const {post,posts , status, likeList, limit,statusDelete,statusCreate,postCreated } = useSelector((store) => {
         return store.posts
     })
+    console.log(posts);
     const [currentPost, setCurrentPost] = useState([])
     const classes = useStyles()
 
@@ -64,7 +65,6 @@ const Posts = ({user}) => {
     },[status])
 
     const fetchData =() => {
-        console.log(page,status,posts);
         dispatch(getPosts(page))
         if((posts.length === 0 || posts.length < limit) && statusDelete != 'SUCCESS'){
             setHasMore(false)

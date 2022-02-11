@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Avatar, Button, Paper, Grid, Typography, Container, Divider } from '@material-ui/core'
-// import { GoogleLogin } from 'react-google-login'
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -11,7 +10,7 @@ import { signup, login } from '../redux/reducerSlice/userSlice.js'
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' }
 
-function Auth({ setUser }) {
+function Auth() {
     const classes = useStyles()
     const [showPassword, setShowPassword] = useState(false)
     const [isSignup, setIsSignup] = useState(false)
@@ -49,49 +48,6 @@ function Auth({ setUser }) {
     }
 
     const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
-
-    // const googleSuccess = async (res) => {
-
-    //     const result = res?.profileObj
-    //     const token = res?.tokenId
-    //     const action = {
-    //         type: 'AUTH',
-    //         data: {
-    //             result,
-    //             token
-    //         }
-    //     }
-    //     try {
-    //         dispatch(action)
-
-    //         navigate('/');
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-    // const googleError = (err) => {
-    //     console.log(err);
-    //     console.log("Google sign in was failed");
-    // }
-    // <GoogleLogin
-    //     clientId="535515150425-g8e6roevol7l5mmqbugi2pc8nocunraf.apps.googleusercontent.com"
-    //     render={(renderProps) => (
-    //         <Button
-    //             className={classes.googleButton}
-    //             color="primary"
-    //             fullWidth
-    //             onClick={renderProps.onClick}
-    //             disabled={renderProps.disabled}
-    //             startIcon={<Icon />}
-    //             variant="contained"
-    //         >
-    //             Google Sign In
-    //         </Button>
-    //     )}
-    //     onSuccess={googleSuccess}
-    //     onFailure={googleError}
-    //     cookiePolicy="single_host_origin"
-    // />
     return ( <Container component = "main"
         style = {
             { display: 'flex', maxWidth: "none", margin: 0, marginTop: "150px", } } >

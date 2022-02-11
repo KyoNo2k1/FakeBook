@@ -97,9 +97,6 @@ const Post = ({post,postId,likeList}) => {
                                 <Fade {...TransitionProps} timeout={350}>
                                     <Paper className={classes.settingPost} elevation={6}>
                                         <Typography>
-                                            <Button fullWidth size="small" color="secondary" className={classes.settingPostBtn} onClick={handleEditPost}>Chỉnh sửa</Button>
-                                        </Typography>
-                                        <Typography>
                                             <Button fullWidth size="small" color="secondary" className={classes.settingPostBtn} onClick={handleDeletePost}>Xóa</Button>
                                         </Typography>
                                     </Paper>

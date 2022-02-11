@@ -4,7 +4,7 @@ const API = axios.create({ baseURL: 'http://localhost:5000/'})
 
 API.interceptors.request.use((req) => {
     if(localStorage.getItem('profile')){
-        req.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).result}`
+        req.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`
     }
     return req
 })
@@ -26,6 +26,8 @@ export const getCommentByPage = (data) => API.post('/posts/getCommentByPage',dat
 export const signIn = (formData) => API.post('/users/signin', formData)
 export const signUp = (formData) => API.post('/users/signup', formData)
 export const isAuthor = (postId) => API.post('/posts/auth', postId)
+export const refToken = (data) => API.post('/users/refreshToken', data)
+
 
 
 

@@ -1,4 +1,4 @@
-import {AppBar, Icon, IconButton, InputBase, Toolbar, Box, Typography, Avatar, Menu, Button, MenuItem, ListItemIcon, ListItemText,Divider } from '@material-ui/core/';
+import {AppBar, Icon, IconButton, InputBase, Toolbar, Box, Typography, Avatar, Menu, MenuItem, ListItemIcon, ListItemText,Divider } from '@material-ui/core/';
 
 import SearchIcon from '@material-ui/icons/Search';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -23,7 +23,7 @@ const middleIcon = ['fas fa-home', 'fab fa-youtube', 'fas fa-users', 'fas fa-dic
 const middleIconLink = ['/home', '/watch', '/group', '/game']
 
 
-export default function Navbar({user,setUser}) {
+export default function Navbar({user}) {
   const classes = useStyles();
   const [leftLine, setleftLine] = useState(528)
   const [activeIcon, setActiveIcon] = useState(0)
@@ -32,7 +32,6 @@ export default function Navbar({user,setUser}) {
   const navigate = useNavigate();
 
   const handleClick = (e) => {
-    // console.log(e.target.children[0].style.color = "#94c2ff");
     setAnchorEl(e.currentTarget);
   };
 
@@ -64,11 +63,10 @@ export default function Navbar({user,setUser}) {
     } catch (error) {
       console.log(error);
     }
-    setUser(JSON.parse(localStorage.getItem('profile')))
     setTimeout(() => {
       setAnchorEl(null)
       navigate('../login')
-    },500)
+    },100)
   }
 
   if(user)
