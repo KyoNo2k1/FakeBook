@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-// import useStyles from './styles'
+import React, { useEffect } from 'react'
 import {  Grid, Grow } from '@material-ui/core'
 import Category from '../Category/Category'
 import FriendList from '../FriendList/FriendList'
@@ -9,8 +8,7 @@ import { useLocation,useNavigate } from "react-router-dom";
 import { logout, refreshToken } from '../../redux/reducerSlice/userSlice'
 
 function Home() {
-    // const classes = useStyles()
-    const { user, exp } = useSelector((store) => store.users)
+    const { user, exp,statusRefToken } = useSelector((store) => store.users)
     const refToken = JSON.parse(localStorage.getItem('profile')).refreshToken
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -19,13 +17,15 @@ function Home() {
         if (user) {
             if (exp * 1000 < Date.now()) {
                 dispatch(refreshToken({token: refToken, user: user.email}))
-                // dispatch(logout())
-                // setTimeout(() => {
-                //     navigate('../login')
-                // },100)
+                if(statusRefToken === "failed"){
+                    dispatch(logout())
+                    setTimeout(() => {
+                        navigate('../')
+                    },100)
+                }
             }
         }
-    },[location])
+    },[user])
     if(user) return(
     <Grow in>
         <Grid container justify="center" alignItems="stretch" style={{marginTop: 70, height: '100%'}} >

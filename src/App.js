@@ -24,7 +24,7 @@ function App() {
       <Navbar user={user}/>
       <Routes>
         <Route path="/" exact element={<Navigate to="/login" />} />
-        <Route path="/home" exact element={<Home/>}/>
+        <Route path="/home" exact element={!user ? <Navigate to="/login"/> : <Home/>}/>
         <Route path="/login" exact element={!user ? <Auth/> : <Navigate to="/home"/>}/>
         <Route path="*" exact element={!user ? <Navigate to="/login"/> : <Navigate to="/home"/>}/>
       </Routes>
