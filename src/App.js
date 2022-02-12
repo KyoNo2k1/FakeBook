@@ -15,10 +15,7 @@ function App() {
   useEffect(() => {
     dispatch(getUser(JSON.parse(localStorage.getItem('profile'))?.data))
   },[])
-  // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
-  // useEffect(() => {
 
-  // },[JSON.parse(localStorage.getItem('profile'))])
   return (
     <BrowserRouter>
       <Navbar user={user}/>
