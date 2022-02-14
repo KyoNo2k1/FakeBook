@@ -34,7 +34,7 @@ function Auth() {
                 if (JSON.parse(localStorage.getItem('profile')) == null) {
                     alert("Username or password incorrect!")
                 } else navigate('../home')
-            }, 2000)
+            }, 3000)
         }
     }
 
