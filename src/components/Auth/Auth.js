@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Avatar, Button, Paper, Grid, Typography, Container, Divider } from '@material-ui/core'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import firebase from './firebase/config'
 
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import useStyles from './styles'
 import Input from './Input';
 import fakebookImg from '../../images/fakebook.png'
-import { signup, login } from '../redux/reducerSlice/userSlice.js'
-
+import { signup, login, loginThird } from '../redux/reducerSlice/userSlice.js'
+import FacebookIcon from '@material-ui/icons/Facebook';
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' }
 
 function Auth() {
@@ -17,7 +19,43 @@ function Auth() {
     const [formData, setFormData] = useState(initialState)
     const dispatch = useDispatch()
     const navigate = useNavigate();
+    const { user } = useSelector(store => store.users)
 
+    const uiConfig = {
+        // Popup signin flow rather than redirect flow.
+        signInFlow: 'popup',
+        // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+        signInSuccessUrl: '../home',
+        // We will display Google and Facebook as auth providers.
+        signInOptions: [
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        ],
+    };
+
+    const [isSignIn, setIsSignIn] = useState(false)
+    useEffect(() => {
+        const unregisterAuthObserver = firebase.auth().onAuthStateChanged((userThird) => {
+            console.log(userThird);
+            if(userThird){
+                setIsSignIn(!!userThird)
+            }
+        })
+        return () => unregisterAuthObserver()
+    },[])
+    useEffect(async () => {
+        const _token = await firebase.auth()?.currentUser.getIdToken()
+        console.log(firebase.auth());
+        if(isSignIn){
+            dispatch(loginThird({
+                data: {
+                    name: firebase.auth().currentUser?.displayName,
+                    email: firebase.auth().currentUser?.email
+                },
+                token: _token,
+            }))
+        }
+    },[isSignIn])
     const handleSubmit = async(e) => {
         e.preventDefault()
         if (isSignup) {
@@ -88,6 +126,15 @@ function Auth() {
         fullWidth variant = "contained"
         color = "primary"
         className = { classes.submit } > { isSignup ? 'Sign Up' : 'Sign In' } </Button>
+        <Divider classes = {
+            { root: classes.divider } }
+        variant = "middle" / >
+        <Button
+        fullWidth variant = "contained"
+        color = "secondary"
+        className = { classes.submit }
+        ><FacebookIcon /> Login with Facebook </Button>
+        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
         <Divider classes = {
             { root: classes.divider } }
         variant = "middle" / >

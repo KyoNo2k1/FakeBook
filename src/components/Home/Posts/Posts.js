@@ -19,7 +19,6 @@ const Posts = () => {
     const {post,posts , status, likeList, limit,statusDelete,statusCreate,postCreated } = useSelector((store) => {
         return store.posts
     })
-    console.log(posts);
     const [currentPost, setCurrentPost] = useState([])
     const classes = useStyles()
 
@@ -27,7 +26,7 @@ const Posts = () => {
     useEffect(() => {
         window.history.scrollRestoration = 'manual'
         dispatch(getPosts(1))
-        dispatch(currentLikePost())
+        dispatch(currentLikePost("haha"))
     },[])
     useEffect(() => {
         if (post){

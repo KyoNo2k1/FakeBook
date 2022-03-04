@@ -29,12 +29,9 @@ function FormUpdate({postId, setOpenFormUpdate}) {
         dispatch(updatePost({...postData,id: postId}))
         setOpenFormUpdate(false)
     }
-    const clear = () => {
-        setPostData({  message: '', selectedFile: '' })
-    }
     const handleCloseForm = () => {
         setOpenFormUpdate(false)
-        clear()
+        setPostData({  message: '', selectedFile: '' })
     }
 
     return (

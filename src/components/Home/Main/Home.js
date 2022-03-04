@@ -9,19 +9,21 @@ import { logout, refreshToken } from '../../redux/reducerSlice/userSlice'
 
 function Home() {
     const { user, exp,statusRefToken } = useSelector((store) => store.users)
-    const refToken = JSON.parse(localStorage.getItem('profile')).refreshToken
+    const refToken = JSON.parse(localStorage.getItem('profile'))?.refreshToken
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const location = useLocation()
     useEffect(()=>{
         if (user) {
-            if (exp * 1000 < Date.now()) {
-                dispatch(refreshToken({token: refToken, user: user.email}))
-                if(statusRefToken === "failed"){
-                    dispatch(logout())
-                    setTimeout(() => {
-                        navigate('../')
-                    },100)
+            if(exp){
+                if (exp * 1000 < Date.now()) {
+                    dispatch(refreshToken({token: refToken, user: user.email}))
+                    if(statusRefToken === "failed"){
+                        dispatch(logout())
+                        setTimeout(() => {
+                            navigate('../')
+                        },100)
+                    }
                 }
             }
         }

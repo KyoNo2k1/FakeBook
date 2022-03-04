@@ -1,9 +1,15 @@
 import axios from 'axios'
+import firebase from '../components/Auth/firebase/config';
 
-// const API = axios.create({ baseURL: 'http://localhost:5000/'})
-const API = axios.create({ baseURL: 'https://fakebookbackenddeploy.herokuapp.com/'})
+const API = axios.create({ baseURL: 'http://localhost:5000/'})
+// const API = axios.create({ baseURL: 'https://fakebookbackenddeploy.herokuapp.com/'})
 
-API.interceptors.request.use((req) => {
+API.interceptors.request.use(async (req) => {
+    const currentUser = firebase.auth().currentUser
+    if(currentUser){
+        const token = await currentUser.getIdToken()
+        req.headers.authorization = `Bearer ${token}`
+    }
     if(localStorage.getItem('profile')){
         req.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`
     }
@@ -19,7 +25,7 @@ export const deletePost = (postId) => API.delete(`/posts/delete/${postId}`)
 
     //like
 export const likePost = (dataLike) => API.post('/posts/likePost',dataLike)
-export const currentLikePost = () => API.get('/posts/currentLikePost')
+export const currentLikePost = (email) => API.get('/posts/currentLikePost',email)
     //comment
 export const comment = (data) => API.post('/posts/comment', data)
 export const getCommentByPage = (data) => API.post('/posts/getCommentByPage',data)

@@ -99,6 +99,9 @@ const Post = ({post,postId,likeList}) => {
                                         <Typography>
                                             <Button fullWidth size="small" color="secondary" className={classes.settingPostBtn} onClick={handleDeletePost}>Xóa</Button>
                                         </Typography>
+                                        <Typography>
+                                            <Button fullWidth size="small" color="secondary" className={classes.settingPostBtn} onClick={handleEditPost}>Chỉnh sửa</Button>
+                                        </Typography>
                                     </Paper>
                                 </Fade>
                                 )}

@@ -1,10 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from '../../../app/api.js'
+import firebase from '../../Auth/firebase/config'
 
 export const login = createAsyncThunk(
     "users/login",
     async(data, { rejectWithValue }) => {
+        console.log(data);
         const response = await api.signIn(data)
+        console.log(response);
         if (response == null) {
             return rejectWithValue(response);
         }
@@ -79,12 +82,18 @@ const user = createSlice({
         },
         logout: (state, action) => {
             localStorage.clear()
+            firebase.auth().signOut()
             state.user = null
         },
+        loginThird: (state, action) => {
+            console.log(action.payload);
+            localStorage.setItem('profile', JSON.stringify(action.payload))
+            state.user = action.payload
+        }
     }
 })
 
 const { reducer, actions } = user
-export const { logout,getUser } = actions
+export const { logout,getUser,loginThird } = actions
 export default reducer
 
