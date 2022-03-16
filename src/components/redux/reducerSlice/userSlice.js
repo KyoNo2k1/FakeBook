@@ -88,7 +88,8 @@ const user = createSlice({
         loginThird: (state, action) => {
             console.log(action.payload);
             localStorage.setItem('profile', JSON.stringify(action.payload))
-            state.user = action.payload
+            state.exp = action.payload.exp
+            state.user = action.payload.data
         }
     }
 })

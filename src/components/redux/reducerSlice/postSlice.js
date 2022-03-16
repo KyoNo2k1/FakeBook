@@ -47,7 +47,7 @@ export const likePost = createAsyncThunk(
 export const currentLikePost = createAsyncThunk(
     "posts/currentLikePost",
     async(emailUser, { rejectWithValue }) => {
-        const response = await api.currentLikePost()
+        const response = await api.currentLikePost(emailUser)
         console.log(response);
         if (!response?.data?.result) {
             return rejectWithValue(response);

@@ -26,7 +26,7 @@ const Posts = () => {
     useEffect(() => {
         window.history.scrollRestoration = 'manual'
         dispatch(getPosts(1))
-        dispatch(currentLikePost("haha"))
+        dispatch(currentLikePost({email: "nghia@gmail.com"}))
     },[])
     useEffect(() => {
         if (post){
