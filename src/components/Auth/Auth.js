@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import firebase from './firebase/config'
 
+import CircularProgress from '../CircularProgress/CircularProgress.js'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import useStyles from './styles'
 import Input from './Input';
@@ -19,7 +20,7 @@ function Auth() {
     const [formData, setFormData] = useState(initialState)
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const { user } = useSelector(store => store.users)
+    const { user,status } = useSelector(store => store.users)
 
     const uiConfig = {
         // Popup signin flow rather than redirect flow.
@@ -72,7 +73,7 @@ function Auth() {
                 if (JSON.parse(localStorage.getItem('profile')) == null) {
                     alert("Username or password incorrect!")
                 } else navigate('../home')
-            }, 3000)
+            }, 10000)
         }
     }
 
@@ -129,11 +130,9 @@ function Auth() {
         <Divider classes = {
             { root: classes.divider } }
         variant = "middle" / >
-        <Button
-        fullWidth variant = "contained"
-        color = "secondary"
-        className = { classes.submit }
-        ><FacebookIcon /> Login with Facebook </Button>
+        {
+            status == 'loading' ? <CircularProgress /> : null
+        }
         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
         <Divider classes = {
             { root: classes.divider } }
