@@ -48,7 +48,6 @@ export const currentLikePost = createAsyncThunk(
     "posts/currentLikePost",
     async(emailUser, { rejectWithValue }) => {
         const response = await api.currentLikePost(emailUser)
-        console.log(response);
         if (!response?.data?.result) {
             return rejectWithValue(response);
         }
@@ -79,7 +78,7 @@ export const updatePost = createAsyncThunk(
     }
 );
 export const authorPost = createAsyncThunk(
-    "posts/currentLikePost",
+    "posts/authorPost",
     async(postId, { rejectWithValue }) => {
         const response = await api.isAuthor(postId)
         if (!response) {
@@ -147,7 +146,6 @@ const posts = createSlice({
         [currentLikePost.fulfilled]: (state, action) => {
             state.statusLike = "LIKE_SUCCESS"
             state.likeList = action.payload
-            console.log(action.payload);
         },
         [currentLikePost.rejected]: (state, action) => {
             state.statusLike = "LIKE_FAILED"

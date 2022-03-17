@@ -26,7 +26,7 @@ const Posts = () => {
     useEffect(() => {
         window.history.scrollRestoration = 'manual'
         dispatch(getPosts(1))
-        dispatch(currentLikePost({email: "nghia@gmail.com"}))
+        dispatch(currentLikePost())
     },[])
     useEffect(() => {
         if (post){
@@ -51,7 +51,7 @@ const Posts = () => {
     useEffect(() => {
         if(status === 'SUCCESS'){
             var arrPostId = []
-            posts.map(post =>{
+            posts?.map(post =>{
                 arrPostId.push(post.id)
             })
             var newArr = {

@@ -25,7 +25,7 @@ export const deletePost = (postId) => API.delete(`/posts/delete/${postId}`)
 
     //like
 export const likePost = (dataLike) => API.post('/posts/likePost',dataLike)
-export const currentLikePost = (email) => API.get('/posts/currentLikePost',email)
+export const currentLikePost = () => API.post('/posts/currentLikePost')
     //comment
 export const comment = (data) => API.post('/posts/comment', data)
 export const getCommentByPage = (data) => API.post('/posts/getCommentByPage',data)
