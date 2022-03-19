@@ -24,7 +24,6 @@ const Post = ({post,postId,likeList}) => {
     const [isComment, setIsComment] = useState(false)
     const [commentCss, setCommentCss] = useState(true);
     const [numberLike, setNumberLike] = useState(post.likes)
-    console.log(likeList);
     useEffect(() => {
         if(likeList?.includes(postId)) {
             setIsLiked(true)

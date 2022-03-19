@@ -5,7 +5,8 @@ export const createPost = createAsyncThunk(
     "posts/createPost",
     async(data, { rejectWithValue }) => {
         const response = await api.createPost(data)
-        if (response.data == null) {
+        console.log(response);
+        if (response?.data?.data == null) {
             return rejectWithValue(response);
         }
         return response?.data?.data

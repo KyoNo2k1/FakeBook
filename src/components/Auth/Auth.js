@@ -45,7 +45,7 @@ function Auth() {
         return () => unregisterAuthObserver()
     },[])
     useEffect(async () => {
-        const _token = await firebase.auth()?.currentUser.getIdToken()
+        const _token = await firebase.auth()?.currentUser?.getIdToken()
         console.log(firebase.auth());
         if(isSignIn){
             dispatch(loginThird({
