@@ -1,8 +1,8 @@
 import axios from 'axios'
 import firebase from '../components/Auth/firebase/config';
 
-// const API = axios.create({ baseURL: 'http://localhost:5000/'})
-const API = axios.create({ baseURL: 'https://fakebookbackenddeploy.herokuapp.com/'})
+const API = axios.create({ baseURL: 'http://localhost:5000/'})
+// const API = axios.create({ baseURL: 'https://fakebookbackenddeploy.herokuapp.com/'})
 
 API.interceptors.request.use(async (req) => {
     const currentUser = firebase.auth().currentUser
