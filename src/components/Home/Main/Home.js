@@ -4,35 +4,49 @@ import Category from "../Category/Category";
 import FriendList from "../FriendList/FriendList";
 import Posts from "../Posts/Posts";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { logout, refreshToken } from "../../redux/reducerSlice/userSlice";
+import { useNavigate } from "react-router-dom";
+import {
+  logout,
+  refreshToken,
+  isLogin,
+} from "../../redux/reducerSlice/userSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 function Home() {
-  const { user, exp, statusRefToken, status } = useSelector(
+  const { user, exp, statusRefToken, status, loginThird } = useSelector(
     (store) => store.users
   );
   const refToken = JSON.parse(localStorage.getItem("profile"))?.refreshToken;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
-  console.log(status);
+
   useEffect(() => {
-    if (status === "success") toast("Đăng nhập thành công! ");
+    if (status === "success") {
+      toast("Đăng nhập thành công! ");
+      dispatch(isLogin());
+    }
   }, [status]);
   useEffect(() => {
+    if (loginThird) {
+      toast("Đăng nhập thành công! ");
+      dispatch(isLogin());
+    }
+  }, [loginThird]);
+  useEffect(() => {
     if (user) {
-      if (exp) {
-        if (exp * 1000 < Date.now()) {
-          dispatch(refreshToken({ token: refToken, user: user.email }));
-          if (statusRefToken === "failed") {
-            dispatch(logout());
-            setTimeout(() => {
-              navigate("../");
-            }, 100);
+      if (!loginThird)
+        if (exp) {
+          if (exp * 1000 < Date.now()) {
+            dispatch(refreshToken({ token: refToken, user: user.email }));
+            if (statusRefToken === "failed") {
+              dispatch(logout());
+              setTimeout(() => {
+                navigate("../login");
+              }, 100);
+            }
           }
         }
-      }
     }
   }, [user]);
   if (user)
