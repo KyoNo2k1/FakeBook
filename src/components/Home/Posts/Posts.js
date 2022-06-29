@@ -21,7 +21,7 @@ const Posts = () => {
     useSelector((store) => {
       return store.posts;
     });
-  console.log(posts);
+
   const [currentPost, setCurrentPost] = useState([]);
   const classes = useStyles();
 

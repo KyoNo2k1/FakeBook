@@ -14,7 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Home() {
-  const { user, exp, statusRefToken, status, loginThird } = useSelector(
+  const { user, exp, statusRefToken, status, isLoginThird } = useSelector(
     (store) => store.users
   );
   const refToken = JSON.parse(localStorage.getItem("profile"))?.refreshToken;
@@ -24,18 +24,20 @@ function Home() {
   useEffect(() => {
     if (status === "success") {
       toast("Đăng nhập thành công! ");
+
       dispatch(isLogin());
     }
   }, [status]);
   useEffect(() => {
-    if (loginThird) {
+    if (isLoginThird) {
       toast("Đăng nhập thành công! ");
+
       dispatch(isLogin());
     }
-  }, [loginThird]);
+  }, [isLoginThird]);
   useEffect(() => {
     if (user) {
-      if (!loginThird)
+      if (!isLoginThird)
         if (exp) {
           if (exp * 1000 < Date.now()) {
             dispatch(refreshToken({ token: refToken, user: user.email }));

@@ -42,7 +42,7 @@ const user = createSlice({
     statusSignUp: null,
     statusRefToken: null,
     exp: null,
-    loginThird: null,
+    isLoginThird: null,
   },
   extraReducers: {
     [login.pending]: (state, action) => {
@@ -50,7 +50,6 @@ const user = createSlice({
     },
     [login.fulfilled]: (state, action) => {
       state.status = "success";
-      console.log(action.payload);
       localStorage.setItem("profile", JSON.stringify(action.payload));
       state.user = action.payload.data;
       state.exp = action.payload.exp;
@@ -96,7 +95,7 @@ const user = createSlice({
       state.statusSignUp = "done";
     },
     isLoginThird: (state, action) => {
-      state.loginThird = true;
+      state.isLoginThird = true;
     },
   },
 });
