@@ -1,13 +1,14 @@
 import axios from "axios";
 import firebase from "../components/Auth/firebase/config";
 
-// const API = axios.create({ baseURL: "http://localhost:5000/" });
-const API = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL,
-});
+const API = axios.create({ baseURL: "http://localhost:5000/" });
+// const API = axios.create({
+//   baseURL: process.env.REACT_APP_BACKEND_URL,
+// });
 
 API.interceptors.request.use(async (req) => {
-  const currentUser = firebase.auth().currentUser;
+  const currentUser = firebase.auth()?.currentUser;
+  console.log(currentUser);
   if (currentUser) {
     const token = await currentUser.getIdToken();
     req.headers.authorization = `Bearer ${token}`;

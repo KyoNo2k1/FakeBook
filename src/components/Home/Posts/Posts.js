@@ -21,7 +21,6 @@ const Posts = () => {
     useSelector((store) => {
       return store.posts;
     });
-
   const [currentPost, setCurrentPost] = useState([]);
   const classes = useStyles();
 
@@ -65,8 +64,8 @@ const Posts = () => {
     }
   }, [status]);
 
-  const fetchData = () => {
-    dispatch(getPosts(page));
+  const fetchData = async () => {
+    await dispatch(getPosts(page));
     if (
       (posts.length === 0 || posts.length < limit) &&
       statusDelete !== "SUCCESS"

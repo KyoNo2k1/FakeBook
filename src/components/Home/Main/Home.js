@@ -27,14 +27,14 @@ function Home() {
 
       dispatch(isLogin());
     }
-  }, [status]);
+  }, [status, dispatch]);
   useEffect(() => {
     if (isLoginThird) {
       toast("Đăng nhập thành công! ");
 
       dispatch(isLogin());
     }
-  }, [isLoginThird]);
+  }, [isLoginThird, dispatch]);
   useEffect(() => {
     if (user) {
       if (!isLoginThird)
