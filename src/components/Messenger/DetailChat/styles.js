@@ -10,4 +10,10 @@ export default makeStyles((theme) => ({
       opacity: "0.8",
     },
   },
+  chatBox: {
+    width: "97%",
+    height: "36px",
+    backgroundColor: "#fff",
+    margin: 10,
+  },
 }));

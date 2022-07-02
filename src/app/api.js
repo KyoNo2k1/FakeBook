@@ -8,7 +8,6 @@ const API = axios.create({ baseURL: "http://localhost:5000/" });
 
 API.interceptors.request.use(async (req) => {
   const currentUser = firebase.auth()?.currentUser;
-  console.log(currentUser);
   if (currentUser) {
     const token = await currentUser.getIdToken();
     req.headers.authorization = `Bearer ${token}`;
