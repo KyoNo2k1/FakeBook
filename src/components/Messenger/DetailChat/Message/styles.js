@@ -4,11 +4,11 @@ export default makeStyles((theme) => ({
   chipChatUser: {
     padding: "5px 0px",
     display: "flex",
+    flexDirection: "row-reverse",
   },
   chipChatGuest: {
     padding: "5px 0px",
     display: "flex",
-    flexDirection: "row-reverse",
   },
   chatMessage: {
     margin: "0 5px",

@@ -83,6 +83,7 @@ const user = createSlice({
       localStorage.clear();
       firebase.auth().signOut();
       state.user = null;
+      state.isLoginThird = false;
     },
     loginThird: (state, action) => {
       state.user = action.payload.data;

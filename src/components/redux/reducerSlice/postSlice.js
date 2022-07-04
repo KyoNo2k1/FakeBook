@@ -28,7 +28,6 @@ export const getPosts = createAsyncThunk(
   "posts/getPosts",
   async (page, { rejectWithValue }) => {
     const response = await api.getPosts(page);
-    console.log(response);
     if (response?.data?.result.length === 0) {
       return rejectWithValue(response?.data);
     }
