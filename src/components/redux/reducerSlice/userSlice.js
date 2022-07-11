@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../../../app/api.js";
-import firebase from "../../Auth/firebase/config";
+
+import firebase, { db, auth } from "../../Auth/firebase/config";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 export const login = createAsyncThunk(
   "users/login",
   async (data, { rejectWithValue }) => {
-    console.log(data);
     const response = await api.signIn(data);
-    console.log(response);
     if (response == null) {
       return rejectWithValue(response);
     }
@@ -24,6 +24,17 @@ export const signup = createAsyncThunk(
     return response?.data;
   }
 );
+export const getUsers = createAsyncThunk(
+  "users/getUsers",
+  async (gmail, { rejectWithValue }) => {
+    const response = await api.getUsers();
+
+    if (!response) {
+      return rejectWithValue(response);
+    }
+    return response?.data?.data;
+  }
+);
 export const refreshToken = createAsyncThunk(
   "users/refreshToken",
   async (refreshToken, { rejectWithValue }) => {
@@ -38,9 +49,11 @@ const user = createSlice({
   name: "user",
   initialState: {
     user: null,
+    users: [],
     status: null,
     statusSignUp: null,
     statusRefToken: null,
+    statusUsers: null,
     exp: null,
     isLoginThird: null,
   },
@@ -74,23 +87,87 @@ const user = createSlice({
     [refreshToken.rejected]: (state, action) => {
       state.statusRefToken = "failed";
     },
+    [login.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [login.fulfilled]: (state, action) => {
+      state.status = "success";
+      localStorage.setItem("profile", JSON.stringify(action.payload));
+      state.user = action.payload.data;
+      state.exp = action.payload.exp;
+    },
+    [login.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [login.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [login.fulfilled]: (state, action) => {
+      state.status = "success";
+      localStorage.setItem("profile", JSON.stringify(action.payload));
+      state.user = action.payload.data;
+      state.exp = action.payload.exp;
+    },
+    [login.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [getUsers.pending]: (state, action) => {
+      state.statusUsers = "loading";
+    },
+    [getUsers.fulfilled]: (state, action) => {
+      state.statusUsers = "success";
+      let arrUsers = [...action.payload];
+      const userRef = collection(db, "users");
+      if (auth.currentUser) {
+        const q = query(
+          userRef,
+          where("uid", "not-in", [auth.currentUser.uid])
+        );
+        onSnapshot(q, (querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            console.log(doc.data());
+            arrUsers = [...arrUsers, doc.data()];
+            state.users = arrUsers;
+          });
+        });
+      } else {
+        const q = query(userRef);
+        onSnapshot(q, (querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            console.log(doc.data());
+            arrUsers = [...arrUsers, doc.data()];
+            state.users = arrUsers;
+          });
+          // const newArrNotUser = arrUsers.filter(
+          //   (data) => data.email !== state.email
+          // );
+          // console.log(arrUsers, newArrNotUser);
+        });
+      }
+    },
+    [getUsers.rejected]: (state, action) => {
+      state.statusUsers = "failed";
+    },
   },
   reducers: {
-    getUser: (state, action) => {
-      state.user = action.payload;
-    },
     logout: (state, action) => {
       localStorage.clear();
+      if (action.payload) {
+        db.collection("users").doc(action.payload).update({
+          isOnline: false,
+        });
+      }
       firebase.auth().signOut();
       state.user = null;
       state.isLoginThird = false;
     },
     loginThird: (state, action) => {
-      state.user = action.payload.data;
       localStorage.setItem("profile", JSON.stringify(action.payload));
+      state.user = action.payload.data;
     },
     isLogin: (state, action) => {
       state.status = "done";
+      state.isLoginThird = false;
     },
     isSignUp: (state, action) => {
       state.statusSignUp = "done";
@@ -102,6 +179,5 @@ const user = createSlice({
 });
 
 const { reducer, actions } = user;
-export const { logout, getUser, loginThird, isLogin, isLoginThird, isSignUp } =
-  actions;
+export const { logout, loginThird, isLogin, isLoginThird, isSignUp } = actions;
 export default reducer;

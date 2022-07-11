@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import firebase from "./firebase/config";
+import firebase, { db } from "./firebase/config";
 import "firebase/app";
 import CircularProgress from "../CircularProgress/CircularProgress.js";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
@@ -26,6 +26,7 @@ import {
 } from "../redux/reducerSlice/userSlice.js";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import { ToastContainer, toast } from "react-toastify";
+import { doc } from "firebase/firestore";
 
 const initialState = {
   firstName: "",
@@ -63,11 +64,20 @@ function Auth() {
       .auth()
       .onAuthStateChanged(async (userThird) => {
         if (userThird) {
+          db.collection("users").doc(userThird.uid).set({
+            uid: userThird.uid,
+            name: firebase.auth().currentUser?.displayName,
+            email: firebase.auth().currentUser?.email,
+            isOnline: true,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          });
+
           const _token = await firebase.auth()?.currentUser?.getIdToken();
           dispatch(isLoginThird());
           dispatch(
             loginThird({
               data: {
+                uid: userThird.uid,
                 name: firebase.auth().currentUser?.displayName,
                 email: firebase.auth().currentUser?.email,
               },

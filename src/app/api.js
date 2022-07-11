@@ -1,10 +1,10 @@
 import axios from "axios";
 import firebase from "../components/Auth/firebase/config";
 
-const API = axios.create({ baseURL: "http://localhost:5000/" });
-// const API = axios.create({
-//   baseURL: process.env.REACT_APP_BACKEND_URL,
-// });
+// const API = axios.create({ baseURL: "http://localhost:5000/" });
+const API = axios.create({
+  baseURL: process.env.REACT_APP_BACKEND_URL,
+});
 
 API.interceptors.request.use(async (req) => {
   const currentUser = firebase.auth()?.currentUser;
@@ -38,3 +38,6 @@ export const signIn = (formData) => API.post("/users/signin", formData);
 export const signUp = (formData) => API.post("/users/signup", formData);
 export const isAuthor = (postId) => API.post("/posts/auth", postId);
 export const refToken = (data) => API.post("/users/refreshToken", data);
+
+//user
+export const getUsers = () => API.get("/users/getUsers");

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Grow } from "@material-ui/core";
 import Category from "../Category/Category";
 import FriendList from "../FriendList/FriendList";
@@ -9,18 +9,23 @@ import {
   logout,
   refreshToken,
   isLogin,
+  getUsers,
 } from "../../redux/reducerSlice/userSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import firebase, { db, auth } from "../../Auth/firebase/config";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
+
 function Home() {
-  const { user, exp, statusRefToken, status, isLoginThird } = useSelector(
-    (store) => store.users
-  );
+  const { user, users, exp, statusRefToken, status, isLoginThird } =
+    useSelector((store) => store.users);
+  console.log(users);
   const refToken = JSON.parse(localStorage.getItem("profile"))?.refreshToken;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [arrUsers, setArrUsers] = useState([]);
+  console.log(arrUsers);
   useEffect(() => {
     if (status === "success") {
       toast("Đăng nhập thành công! ");
@@ -49,6 +54,18 @@ function Home() {
             }
           }
         }
+      const userRef = collection(db, "users");
+      const q = query(userRef);
+      const unSub = onSnapshot(q, (querySnapshot) => {
+        let usersThird = [];
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data());
+          usersThird.push(doc.data());
+        });
+        setArrUsers(usersThird);
+      });
+      // dispatch(getUsers());
+      return () => unSub();
     }
   }, [user]);
   if (user)

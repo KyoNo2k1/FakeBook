@@ -84,7 +84,7 @@ export default function Navbar({ user }) {
   };
   const handleLogout = () => {
     try {
-      dispatch(logout());
+      dispatch(logout(JSON.parse(localStorage.getItem("profile"))?.data?.uid));
     } catch (error) {
       console.log(error);
     }
