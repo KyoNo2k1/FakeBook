@@ -1,6 +1,6 @@
 import React from "react";
 import useStyles from "./styles";
-
+import { useSelector } from "react-redux";
 import {
   Avatar,
   Box,
@@ -17,8 +17,11 @@ import { MdVideoCall } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import SearchIcon from "@material-ui/icons/Search";
 import userImg from "../../../images/avatar.png";
-const ListChat = () => {
-  console.log(window.innerHeight);
+const ListChat = ({ setGuest }) => {
+  const { arrUsers } = useSelector((store) => {
+    return store.users;
+  });
+
   const classes = useStyles();
   const listHeader = 122;
   const listBody = window.innerHeight - listHeader - 92;
@@ -93,564 +96,72 @@ const ListChat = () => {
           sx={{ width: "100%", bgcolor: "background.paper" }}
           classes={{ root: classes.listChat }}
         >
-          <ListItem
-            alignItems="center"
-            button={true}
-            divider={true}
-            selected={true}
-            classes={{ root: classes.listChatItem }}
-          >
-            <ListItemAvatar
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              classes={{ root: classes.listItemAvatarRoot }}
+          {arrUsers?.map((user, index) => (
+            <ListItem
+              alignItems="center"
+              button={true}
+              divider={true}
+              selected={true}
+              classes={{ root: classes.listChatItem }}
+              key={index}
+              onClick={() => setGuest(user)}
             >
-              <Avatar
-                style={{ width: 50, height: 50 }}
-                alt="Avatar1"
-                src={userImg}
-              />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Typography
-                  sx={{ display: "inline" }}
-                  classes={{ root: classes.chatName }}
-                  component="span"
-                  color="text.primary"
-                >
-                  Nghia
-                </Typography>
-              }
-              secondary={
-                <Box sx={{ display: "flex" }}>
+              <ListItemAvatar
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                classes={{ root: classes.listItemAvatarRoot }}
+              >
+                <Avatar
+                  style={{ width: 50, height: 50 }}
+                  alt="Avatar1"
+                  src={userImg}
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary={
                   <Typography
-                    sx={{ display: "inline", flex: 1 }}
-                    classes={{ root: classes.chatTitle2 }}
+                    sx={{ display: "inline" }}
+                    classes={{ root: classes.chatName }}
                     component="span"
-                    variant="subtitle2"
                     color="text.primary"
                   >
+                    {user?.name}
+                  </Typography>
+                }
+                secondary={
+                  <Box sx={{ display: "flex" }}>
                     <Typography
-                      sx={{ display: "block" }}
-                      classes={{ root: classes.chatTitle1 }}
+                      sx={{ display: "inline", flex: 1 }}
+                      classes={{ root: classes.chatTitle2 }}
                       component="span"
                       variant="subtitle2"
                       color="text.primary"
                     >
-                      Nghia
+                      <Typography
+                        sx={{ display: "block" }}
+                        classes={{ root: classes.chatTitle1 }}
+                        component="span"
+                        variant="subtitle2"
+                        color="text.primary"
+                      >
+                        Nghia
+                      </Typography>
+                      {" ⋆ Chào mừng bạn đã đến với website fakebook of me"}
                     </Typography>
-                    {" ⋆ Chào mừng bạn đã đến với website fakebook of me"}
-                  </Typography>
-                  <Typography
-                    sx={{ display: "flex" }}
-                    classes={{ root: classes.chatTime }}
-                  >
-                    72 giờ
-                  </Typography>
-                </Box>
-              }
-            />
-          </ListItem>
-          <ListItem
-            alignItems="center"
-            button={true}
-            divider={true}
-            selected={false}
-            classes={{ root: classes.listChatItem }}
-          >
-            <ListItemAvatar
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              classes={{ root: classes.listItemAvatarRoot }}
-            >
-              <Avatar
-                style={{ width: 50, height: 50 }}
-                alt="Avatar1"
-                src={userImg}
-              />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Typography
-                  sx={{ display: "inline" }}
-                  classes={{ root: classes.chatName }}
-                  component="span"
-                  color="text.primary"
-                >
-                  Nghia
-                </Typography>
-              }
-              secondary={
-                <Box sx={{ display: "flex" }}>
-                  <Typography
-                    sx={{ display: "inline", flex: 1 }}
-                    classes={{ root: classes.chatTitle2 }}
-                    component="span"
-                    variant="subtitle2"
-                    color="text.primary"
-                  >
                     <Typography
-                      sx={{ display: "block" }}
-                      classes={{ root: classes.chatTitle1 }}
-                      component="span"
-                      variant="subtitle2"
-                      color="text.primary"
+                      sx={{ display: "flex" }}
+                      classes={{ root: classes.chatTime }}
                     >
-                      Nghia
+                      72 giờ
                     </Typography>
-                    {" ⋆ Chào mừng bạn đã đến với website fakebook of me"}
-                  </Typography>
-                  <Typography
-                    sx={{ display: "flex" }}
-                    classes={{ root: classes.chatTime }}
-                  >
-                    72 giờ
-                  </Typography>
-                </Box>
-              }
-            />
-          </ListItem>
-          <ListItem
-            alignItems="center"
-            button={true}
-            divider={true}
-            selected={false}
-            classes={{ root: classes.listChatItem }}
-          >
-            <ListItemAvatar
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              classes={{ root: classes.listItemAvatarRoot }}
-            >
-              <Avatar
-                style={{ width: 50, height: 50 }}
-                alt="Avatar1"
-                src={userImg}
+                  </Box>
+                }
               />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Typography
-                  sx={{ display: "inline" }}
-                  classes={{ root: classes.chatName }}
-                  component="span"
-                  color="text.primary"
-                >
-                  Nghia
-                </Typography>
-              }
-              secondary={
-                <Box sx={{ display: "flex" }}>
-                  <Typography
-                    sx={{ display: "inline", flex: 1 }}
-                    classes={{ root: classes.chatTitle2 }}
-                    component="span"
-                    variant="subtitle2"
-                    color="text.primary"
-                  >
-                    <Typography
-                      sx={{ display: "block" }}
-                      classes={{ root: classes.chatTitle1 }}
-                      component="span"
-                      variant="subtitle2"
-                      color="text.primary"
-                    >
-                      Nghia
-                    </Typography>
-                    {" ⋆ Chào mừng bạn đã đến với website fakebook of me"}
-                  </Typography>
-                  <Typography
-                    sx={{ display: "flex" }}
-                    classes={{ root: classes.chatTime }}
-                  >
-                    72 giờ
-                  </Typography>
-                </Box>
-              }
-            />
-          </ListItem>
-          <ListItem
-            alignItems="center"
-            button={true}
-            divider={true}
-            selected={false}
-            classes={{ root: classes.listChatItem }}
-          >
-            <ListItemAvatar
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              classes={{ root: classes.listItemAvatarRoot }}
-            >
-              <Avatar
-                style={{ width: 50, height: 50 }}
-                alt="Avatar1"
-                src={userImg}
-              />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Typography
-                  sx={{ display: "inline" }}
-                  classes={{ root: classes.chatName }}
-                  component="span"
-                  color="text.primary"
-                >
-                  Nghia
-                </Typography>
-              }
-              secondary={
-                <Box sx={{ display: "flex" }}>
-                  <Typography
-                    sx={{ display: "inline", flex: 1 }}
-                    classes={{ root: classes.chatTitle2 }}
-                    component="span"
-                    variant="subtitle2"
-                    color="text.primary"
-                  >
-                    <Typography
-                      sx={{ display: "block" }}
-                      classes={{ root: classes.chatTitle1 }}
-                      component="span"
-                      variant="subtitle2"
-                      color="text.primary"
-                    >
-                      Nghia
-                    </Typography>
-                    {" ⋆ Chào mừng bạn đã đến với website fakebook of me"}
-                  </Typography>
-                  <Typography
-                    sx={{ display: "flex" }}
-                    classes={{ root: classes.chatTime }}
-                  >
-                    72 giờ
-                  </Typography>
-                </Box>
-              }
-            />
-          </ListItem>
-          <ListItem
-            alignItems="center"
-            button={true}
-            divider={true}
-            selected={false}
-            classes={{ root: classes.listChatItem }}
-          >
-            <ListItemAvatar
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              classes={{ root: classes.listItemAvatarRoot }}
-            >
-              <Avatar
-                style={{ width: 50, height: 50 }}
-                alt="Avatar1"
-                src={userImg}
-              />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Typography
-                  sx={{ display: "inline" }}
-                  classes={{ root: classes.chatName }}
-                  component="span"
-                  color="text.primary"
-                >
-                  Nghia
-                </Typography>
-              }
-              secondary={
-                <Box sx={{ display: "flex" }}>
-                  <Typography
-                    sx={{ display: "inline", flex: 1 }}
-                    classes={{ root: classes.chatTitle2 }}
-                    component="span"
-                    variant="subtitle2"
-                    color="text.primary"
-                  >
-                    <Typography
-                      sx={{ display: "block" }}
-                      classes={{ root: classes.chatTitle1 }}
-                      component="span"
-                      variant="subtitle2"
-                      color="text.primary"
-                    >
-                      Nghia
-                    </Typography>
-                    {" ⋆ Chào mừng bạn đã đến với website fakebook of me"}
-                  </Typography>
-                  <Typography
-                    sx={{ display: "flex" }}
-                    classes={{ root: classes.chatTime }}
-                  >
-                    72 giờ
-                  </Typography>
-                </Box>
-              }
-            />
-          </ListItem>
-          <ListItem
-            alignItems="center"
-            button={true}
-            divider={true}
-            selected={false}
-            classes={{ root: classes.listChatItem }}
-          >
-            <ListItemAvatar
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              classes={{ root: classes.listItemAvatarRoot }}
-            >
-              <Avatar
-                style={{ width: 50, height: 50 }}
-                alt="Avatar1"
-                src={userImg}
-              />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Typography
-                  sx={{ display: "inline" }}
-                  classes={{ root: classes.chatName }}
-                  component="span"
-                  color="text.primary"
-                >
-                  Nghia
-                </Typography>
-              }
-              secondary={
-                <Box sx={{ display: "flex" }}>
-                  <Typography
-                    sx={{ display: "inline", flex: 1 }}
-                    classes={{ root: classes.chatTitle2 }}
-                    component="span"
-                    variant="subtitle2"
-                    color="text.primary"
-                  >
-                    <Typography
-                      sx={{ display: "block" }}
-                      classes={{ root: classes.chatTitle1 }}
-                      component="span"
-                      variant="subtitle2"
-                      color="text.primary"
-                    >
-                      Nghia
-                    </Typography>
-                    {" ⋆ Chào mừng bạn đã đến với website fakebook of me"}
-                  </Typography>
-                  <Typography
-                    sx={{ display: "flex" }}
-                    classes={{ root: classes.chatTime }}
-                  >
-                    72 giờ
-                  </Typography>
-                </Box>
-              }
-            />
-          </ListItem>
-          <ListItem
-            alignItems="center"
-            button={true}
-            divider={true}
-            selected={false}
-            classes={{ root: classes.listChatItem }}
-          >
-            <ListItemAvatar
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              classes={{ root: classes.listItemAvatarRoot }}
-            >
-              <Avatar
-                style={{ width: 50, height: 50 }}
-                alt="Avatar1"
-                src={userImg}
-              />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Typography
-                  sx={{ display: "inline" }}
-                  classes={{ root: classes.chatName }}
-                  component="span"
-                  color="text.primary"
-                >
-                  Nghia
-                </Typography>
-              }
-              secondary={
-                <Box sx={{ display: "flex" }}>
-                  <Typography
-                    sx={{ display: "inline", flex: 1 }}
-                    classes={{ root: classes.chatTitle2 }}
-                    component="span"
-                    variant="subtitle2"
-                    color="text.primary"
-                  >
-                    <Typography
-                      sx={{ display: "block" }}
-                      classes={{ root: classes.chatTitle1 }}
-                      component="span"
-                      variant="subtitle2"
-                      color="text.primary"
-                    >
-                      Nghia
-                    </Typography>
-                    {" ⋆ Chào mừng bạn đã đến với website fakebook of me"}
-                  </Typography>
-                  <Typography
-                    sx={{ display: "flex" }}
-                    classes={{ root: classes.chatTime }}
-                  >
-                    72 giờ
-                  </Typography>
-                </Box>
-              }
-            />
-          </ListItem>
-          <ListItem
-            alignItems="center"
-            button={true}
-            divider={true}
-            selected={false}
-            classes={{ root: classes.listChatItem }}
-          >
-            <ListItemAvatar
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              classes={{ root: classes.listItemAvatarRoot }}
-            >
-              <Avatar
-                style={{ width: 50, height: 50 }}
-                alt="Avatar1"
-                src={userImg}
-              />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Typography
-                  sx={{ display: "inline" }}
-                  classes={{ root: classes.chatName }}
-                  component="span"
-                  color="text.primary"
-                >
-                  Nghia
-                </Typography>
-              }
-              secondary={
-                <Box sx={{ display: "flex" }}>
-                  <Typography
-                    sx={{ display: "inline", flex: 1 }}
-                    classes={{ root: classes.chatTitle2 }}
-                    component="span"
-                    variant="subtitle2"
-                    color="text.primary"
-                  >
-                    <Typography
-                      sx={{ display: "block" }}
-                      classes={{ root: classes.chatTitle1 }}
-                      component="span"
-                      variant="subtitle2"
-                      color="text.primary"
-                    >
-                      Nghia
-                    </Typography>
-                    {" ⋆ Chào mừng bạn đã đến với website fakebook of me"}
-                  </Typography>
-                  <Typography
-                    sx={{ display: "flex" }}
-                    classes={{ root: classes.chatTime }}
-                  >
-                    72 giờ
-                  </Typography>
-                </Box>
-              }
-            />
-          </ListItem>
-          <ListItem
-            alignItems="center"
-            button={true}
-            divider={true}
-            selected={false}
-            classes={{ root: classes.listChatItem }}
-          >
-            <ListItemAvatar
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              classes={{ root: classes.listItemAvatarRoot }}
-            >
-              <Avatar
-                style={{ width: 50, height: 50 }}
-                alt="Avatar1"
-                src={userImg}
-              />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Typography
-                  sx={{ display: "inline" }}
-                  classes={{ root: classes.chatName }}
-                  component="span"
-                  color="text.primary"
-                >
-                  Nghia
-                </Typography>
-              }
-              secondary={
-                <Box sx={{ display: "flex" }}>
-                  <Typography
-                    sx={{ display: "inline", flex: 1 }}
-                    classes={{ root: classes.chatTitle2 }}
-                    component="span"
-                    variant="subtitle2"
-                    color="text.primary"
-                  >
-                    <Typography
-                      sx={{ display: "block" }}
-                      classes={{ root: classes.chatTitle1 }}
-                      component="span"
-                      variant="subtitle2"
-                      color="text.primary"
-                    >
-                      Nghia
-                    </Typography>
-                    {" ⋆ Chào mừng bạn đã đến với website fakebook of me"}
-                  </Typography>
-                  <Typography
-                    sx={{ display: "flex" }}
-                    classes={{ root: classes.chatTime }}
-                  >
-                    72 giờ
-                  </Typography>
-                </Box>
-              }
-            />
-          </ListItem>
+            </ListItem>
+          ))}
         </List>
       </Paper>
     </Paper>

@@ -18,7 +18,6 @@ export default makeStyles((theme) => ({
   },
   chatBoxIcon: {
     height: "100%",
-    width: "18%",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",

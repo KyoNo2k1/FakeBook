@@ -12,6 +12,9 @@ function App() {
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.users);
   console.log(user);
+  // useEffect(() => {
+  //   dispatch(getUser(JSON.parse(localStorage.getItem("profile"))?.data));
+  // }, []);
 
   return (
     <BrowserRouter>

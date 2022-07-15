@@ -10,6 +10,7 @@ import {
   refreshToken,
   isLogin,
   getUsers,
+  updateUsers,
 } from "../../redux/reducerSlice/userSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,12 +21,10 @@ import { collection, query, where, onSnapshot } from "firebase/firestore";
 function Home() {
   const { user, users, exp, statusRefToken, status, isLoginThird } =
     useSelector((store) => store.users);
-  console.log(users);
   const refToken = JSON.parse(localStorage.getItem("profile"))?.refreshToken;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [arrUsers, setArrUsers] = useState([]);
-  console.log(arrUsers);
   useEffect(() => {
     if (status === "success") {
       toast("Đăng nhập thành công! ");
@@ -42,7 +41,7 @@ function Home() {
   }, [isLoginThird, dispatch]);
   useEffect(() => {
     if (user) {
-      if (!isLoginThird)
+      if (!isLoginThird) {
         if (exp) {
           if (exp * 1000 < Date.now()) {
             dispatch(refreshToken({ token: refToken, user: user.email }));
@@ -54,20 +53,43 @@ function Home() {
             }
           }
         }
-      const userRef = collection(db, "users");
-      const q = query(userRef);
-      const unSub = onSnapshot(q, (querySnapshot) => {
-        let usersThird = [];
-        querySnapshot.forEach((doc) => {
-          console.log(doc.data());
-          usersThird.push(doc.data());
-        });
-        setArrUsers(usersThird);
-      });
-      // dispatch(getUsers());
-      return () => unSub();
+      }
+      dispatch(getUsers());
     }
   }, [user]);
+  useEffect(() => {
+    if (users[0]) {
+      let arr = [...users[0]];
+      const userRef = collection(db, "users");
+      if (auth.currentUser) {
+        const q = query(
+          userRef,
+          where("uid", "not-in", [auth.currentUser.uid])
+        );
+        onSnapshot(q, (querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            arr.push(doc.data());
+            setArrUsers(arr);
+          });
+        });
+      } else {
+        const q = query(userRef);
+        onSnapshot(q, (querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            arr.push(doc.data());
+            const newArrNotUser = arr.filter(
+              (data) => data.email !== user.email
+            );
+            setArrUsers(newArrNotUser);
+          });
+        });
+      }
+    }
+  }, [users]);
+  useEffect(() => {
+    if (arrUsers) dispatch(updateUsers(arrUsers));
+  }, [arrUsers]);
+
   if (user)
     return (
       <Grow in>

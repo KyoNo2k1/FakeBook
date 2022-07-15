@@ -23,16 +23,28 @@ import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import Picker, { SKIN_TONE_MEDIUM_DARK } from "emoji-picker-react";
 import { useSelector } from "react-redux";
 
-import firebase, { db } from "../../Auth/firebase/config";
+import firebase, { db, storage } from "../../Auth/firebase/config";
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
-const DetaiChat = () => {
+const DetaiChat = ({ guest }) => {
   const detailChatHeaderHeight = 52;
   const [messages, setMessages] = useState([]);
+  const [img, setImg] = useState("");
+
   const { user } = useSelector((store) => {
     return store.users;
   });
+  console.log(messages);
   useEffect(() => {
     db.collection("messages")
+      .doc(
+        `${
+          guest.email > user.email
+            ? `${guest.email}-${user.email}`
+            : `${user.email}-${guest.email}`
+        }`
+      )
+      .collection("chat")
       .orderBy("timestamp", "desc")
       .onSnapshot(
         (snapshot) => {
@@ -44,7 +56,7 @@ const DetaiChat = () => {
           console.log(error);
         }
       );
-  }, []);
+  }, [guest]);
 
   const [emojiBtn, setEmojiBtn] = useState(false);
   const chatRef = useRef();
@@ -57,22 +69,48 @@ const DetaiChat = () => {
       setChat(chatRef.current.value);
     }
   };
-  const sendChat = (e) => {
+  const sendChat = async (e) => {
     e.preventDefault();
     if (e.keyCode === 13 && chatRef.current.value !== "") {
-      db.collection("messages").add({
-        message: chat,
-        userName: user.name,
-        email: user.email,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      });
+      let url;
+      console.log(url);
+
+      if (img) {
+        const imgRef = ref(
+          storage,
+          `images/${firebase.firestore.FieldValue.serverTimestamp()} - ${
+            img.name
+          }`
+        );
+        const snap = await uploadBytes(imgRef, img);
+        const picturURL = await getDownloadURL(ref(storage, snap.ref.fullPath));
+        url = picturURL;
+        console.log(url);
+      }
+      db.collection("messages")
+        .doc(
+          `${
+            guest.email > user.email
+              ? `${guest.email}-${user.email}`
+              : `${user.email}-${guest.email}`
+          }`
+        )
+        .collection("chat")
+        .add({
+          message: chat,
+          userName: user.name,
+          from: user.email,
+          to: guest.email,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          media: url || "",
+        });
       chatRef.current.value = "";
       setChat("");
       setEmojiBtn(false);
     }
   };
 
-  return (
+  return guest.email != null ? (
     <Box
       sx={{
         flex: 1,
@@ -93,7 +131,7 @@ const DetaiChat = () => {
           <Avatar alt="Avatar1" src={userImg} />
           <Box sx={{ mx: 1 }}>
             <Typography style={{ fontWeight: 700, fontSize: 20 }}>
-              Trung Nghia
+              {guest.name}
             </Typography>
             <Typography variant="subtitle2">Đang hoạt động</Typography>
           </Box>
@@ -127,18 +165,36 @@ const DetaiChat = () => {
             <Message
               userName={data?.userName}
               message={data?.message}
-              email={data?.email}
+              email={data?.from}
               key={id}
+              imgUrl={data?.media}
             />
           );
         })}
       </Box>
       <Box className={classes.chatBox}>
         <Box className={classes.chatBoxIcon}>
-          <AddCircleOutlineIcon style={{ fontSize: 30 }} />
-          <BrokenImageIcon style={{ fontSize: 30 }} />
-          <LoyaltyIcon style={{ fontSize: 30 }} />
-          <GifIcon style={{ fontSize: 28, padding: 3 }} />
+          <IconButton color="primary" component="span">
+            <AddCircleOutlineIcon style={{ fontSize: 20 }} />
+          </IconButton>
+          <input
+            accept="image/*"
+            style={{ display: "none" }}
+            id="icon-button-photo"
+            onChange={(e) => setImg(e.target.files[0])}
+            type="file"
+          />
+          <label htmlFor="icon-button-photo">
+            <IconButton color="primary" component="span">
+              <BrokenImageIcon style={{ fontSize: 20 }} />
+            </IconButton>
+          </label>
+          <IconButton color="primary" component="span">
+            <LoyaltyIcon style={{ fontSize: 20 }} />
+          </IconButton>
+          <IconButton color="primary" component="span">
+            <GifIcon style={{ fontSize: 28, padding: 3 }} />
+          </IconButton>
         </Box>
         <FormControl className={classes.inputChat} variant="filled">
           <FilledInput
@@ -186,6 +242,19 @@ const DetaiChat = () => {
         </Box>
       </Box>
     </Box>
+  ) : (
+    <Typography
+      style={{
+        flex: 1,
+        backgroundColor: "rgba(0, 0, 0,0.2)",
+        fontWeight: "bold",
+        padding: 50,
+        fontSize: 30,
+      }}
+      align="center"
+    >
+      Chọn người để chat
+    </Typography>
   );
 };
 

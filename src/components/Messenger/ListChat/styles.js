@@ -44,7 +44,7 @@ export default makeStyles((theme) => ({
   listChat: {
     width: "100%",
     height: "100%",
-    overflowY: "scroll",
+    overflowY: "auto",
   },
   listChatItem: {
     paddingRight: 0,

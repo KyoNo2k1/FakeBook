@@ -1,5 +1,5 @@
 import { Box, Paper } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import ListChat from "./ListChat/ListChat";
 import DetaiChat from "./DetailChat/DetaiChat";
 import SettingChat from "./SettingChat/SettingChat";
@@ -7,6 +7,7 @@ import SettingChat from "./SettingChat/SettingChat";
 function Messenger() {
   const chatHeight = window.innerHeight - 66;
   //92 = 65 + padding
+  const [guest, setGuest] = useState({});
 
   return (
     <Box>
@@ -26,9 +27,9 @@ function Messenger() {
           overflow: "hidden",
         }}
       >
-        <ListChat />
-        <DetaiChat />
-        <SettingChat />
+        <ListChat setGuest={setGuest} />
+        <DetaiChat guest={guest} />
+        <SettingChat guest={guest} />
       </Paper>
     </Box>
   );
