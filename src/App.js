@@ -6,14 +6,9 @@ import Auth from "./components/Auth/Auth";
 import { useSelector, useDispatch } from "react-redux";
 import "./App.css";
 import Messenger from "./components/Messenger";
-
 function App() {
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.users);
-  console.log(user);
-  // useEffect(() => {
-  //   dispatch(getUser(JSON.parse(localStorage.getItem("profile"))?.data));
-  // }, []);
 
   return (
     <BrowserRouter>

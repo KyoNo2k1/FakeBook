@@ -54,9 +54,11 @@ function Home() {
           }
         }
       }
+      console.log(1);
       dispatch(getUsers());
     }
   }, [user]);
+  console.log(user);
   useEffect(() => {
     if (users[0]) {
       let arr = [...users[0]];

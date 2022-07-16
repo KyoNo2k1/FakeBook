@@ -34,7 +34,6 @@ const DetaiChat = ({ guest }) => {
   const { user } = useSelector((store) => {
     return store.users;
   });
-  console.log(messages);
   useEffect(() => {
     db.collection("messages")
       .doc(

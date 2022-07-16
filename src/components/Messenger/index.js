@@ -8,7 +8,7 @@ function Messenger() {
   const chatHeight = window.innerHeight - 66;
   //92 = 65 + padding
   const [guest, setGuest] = useState({});
-
+  console.log(guest);
   return (
     <Box>
       <Paper

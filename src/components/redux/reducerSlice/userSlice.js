@@ -28,6 +28,7 @@ export const getUsers = createAsyncThunk(
   "users/getUsers",
   async (arrUserThird, { rejectWithValue }) => {
     const response = await api.getUsers();
+    console.log(response);
     if (!response) {
       return rejectWithValue(response);
     }
@@ -117,6 +118,7 @@ const user = createSlice({
     [getUsers.fulfilled]: (state, action) => {
       state.statusUsers = "success";
       state.users = [action.payload];
+      console.log(action.payload);
       // const userRef = collection(db, "users");
       // if (auth.currentUser) {
       //   const q = query(

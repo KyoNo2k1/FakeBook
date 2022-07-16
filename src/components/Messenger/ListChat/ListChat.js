@@ -21,6 +21,7 @@ const ListChat = ({ setGuest }) => {
   const { arrUsers } = useSelector((store) => {
     return store.users;
   });
+  console.log(arrUsers);
 
   const classes = useStyles();
   const listHeader = 122;
