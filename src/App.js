@@ -8,7 +8,7 @@ import "./App.css";
 import Messenger from "./components/Messenger";
 function App() {
   const { user } = useSelector((store) => store.users);
-
+  console.log(process.env.REACT_APP_BACKEND_URL);
   return (
     <BrowserRouter>
       <Navbar user={user} />
