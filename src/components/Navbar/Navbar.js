@@ -12,14 +12,18 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
-} from "@material-ui/core/";
-
-import SearchIcon from "@material-ui/icons/Search";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-
-import React from "react";
+  Tabs,
+  Tab,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import HomeIcon from "@mui/icons-material/Home";
+import SearchIcon from "@mui/icons-material/Search";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import LiveTvIcon from "@mui/icons-material/LiveTv";
+import GroupsIcon from "@mui/icons-material/Groups";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -33,14 +37,6 @@ import useStyles from "./styles";
 
 import { logout } from "../redux/reducerSlice/userSlice";
 
-const middleIcon = [
-  "fas fa-home",
-  "fab fa-youtube",
-  "fas fa-users",
-  "fas fa-dice-d6",
-];
-const middleIconLink = ["/home", "/watch", "/group", "/game"];
-
 export default function Navbar({ user }) {
   const classes = useStyles();
   const [leftLine, setleftLine] = useState(528);
@@ -48,40 +44,22 @@ export default function Navbar({ user }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const middleIconLink = ["/home", "/watch", "/group", "/game"];
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
+  };
+
+  const [valueTabs, setValueTabs] = useState(0);
+
+  const handleChangeTabs = (event, newValue) => {
+    setValueTabs(newValue);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  useEffect(() => {
-    if (user) {
-      resetAvtive();
-      setleftLine(528 + activeIcon * 116);
-
-      document.getElementById("boxIcon").children[
-        activeIcon
-      ].children[0].style.color = "#94c2ff";
-    }
-  }, [activeIcon, user]);
-
-  const Line = () => (
-    <div style={{ left: leftLine + "px" }} className={classes.line}></div>
-  );
-
-  const resetAvtive = () => {
-    document.getElementById("boxIcon").children[0].children[0].style.color =
-      "white";
-    document.getElementById("boxIcon").children[1].children[0].style.color =
-      "white";
-    document.getElementById("boxIcon").children[2].children[0].style.color =
-      "white";
-    document.getElementById("boxIcon").children[3].children[0].style.color =
-      "white";
-  };
   const handleLogout = () => {
     try {
       dispatch(logout(JSON.parse(localStorage.getItem("profile"))?.data?.uid));
@@ -93,6 +71,18 @@ export default function Navbar({ user }) {
       navigate("../login");
     }, 100);
   };
+
+  const CustomizedTab = styled(Tab)`
+    color: #fff;
+
+    :hover {
+      color: #2e8b57;
+    }
+
+    &.Mui-selected {
+      color: #92fff8;
+    }
+  `;
 
   if (user)
     return (
@@ -150,21 +140,37 @@ export default function Navbar({ user }) {
             </Box>
 
             <Box className={classes.middleLocation} id="boxIcon">
-              {middleIcon.map((className, index) => (
-                <Link key={index} to={middleIconLink[index]}>
-                  <div
-                    className={classes.middleIcon}
-                    key={index}
-                    onClick={() => setActiveIcon(index)}
-                  >
-                    <i
-                      className={className}
-                      style={{ fontSize: "2rem", width: "36px" }}
-                    ></i>
-                  </div>
-                </Link>
-              ))}
-              <Line />
+              <Tabs
+                value={valueTabs}
+                onChange={handleChangeTabs}
+                aria-label="icon tabs example"
+                classes={{ indicator: classes.indicatorColor }}
+              >
+                <CustomizedTab
+                  component="a"
+                  icon={<HomeIcon sx={{ fontSize: "40px" }} />}
+                  aria-label="home"
+                  onClick={() => navigate("/home")}
+                />
+                <CustomizedTab
+                  component="a"
+                  icon={<LiveTvIcon sx={{ fontSize: "40px" }} />}
+                  aria-label="watch"
+                  onClick={() => navigate("/watch")}
+                />
+                <CustomizedTab
+                  component="a"
+                  icon={<GroupsIcon sx={{ fontSize: "40px" }} />}
+                  aria-label="group"
+                  onClick={() => navigate("/group")}
+                />
+                <CustomizedTab
+                  component="a"
+                  icon={<SportsEsportsIcon sx={{ fontSize: "40px" }} />}
+                  aria-label="game"
+                  onClick={() => navigate("/game")}
+                />
+              </Tabs>
             </Box>
 
             <Box className={classes.rightLocation}>
@@ -175,45 +181,52 @@ export default function Navbar({ user }) {
                 </Typography>
               </div>
               <div className={classes.rightLocationIcon}>
-                <Icon>
+                <Icon classes={{ root: classes.navIcon }}>
                   <CgMenuGridO className={classes.rightLocationIconCss} />
                 </Icon>
                 <Icon
-                  style={{ position: "relative" }}
+                  classes={{ root: classes.navIcon }}
                   onClick={() => navigate("./messenger")}
                 >
                   <RiMessengerFill className={classes.rightLocationIconCss} />
-                  <div className={classes.notiCount}>
-                    <span
-                      style={{
-                        position: "absolute",
-                        top: -1,
-                        left: 6,
-                        fontSize: "1rem",
-                      }}
-                    >
-                      1
-                    </span>
-                  </div>
+                  {
+                    // <div className={classes.notiCount}>
+                    //   <span
+                    //     style={{
+                    //       position: "absolute",
+                    //       top: -1,
+                    //       left: 6,
+                    //       fontSize: "1rem",
+                    //     }}
+                    //   >
+                    //     1
+                    //   </span>
+                    // </div>
+                  }
                 </Icon>
-                <Icon style={{ position: "relative" }}>
+                <Icon
+                  classes={{ root: classes.navIcon }}
+                  style={{ position: "relative" }}
+                >
                   <MdOutlineNotifications
                     className={classes.rightLocationIconCss}
                   />
-                  <div className={classes.notiCount}>
-                    <span
-                      style={{
-                        position: "absolute",
-                        top: -1,
-                        left: 6,
-                        fontSize: "1rem",
-                      }}
-                    >
-                      1
-                    </span>
-                  </div>
+                  {
+                    // <div className={classes.notiCount}>
+                    //   <span
+                    //     style={{
+                    //       position: "absolute",
+                    //       top: -1,
+                    //       left: 6,
+                    //       fontSize: "1rem",
+                    //     }}
+                    //   >
+                    //     1
+                    //   </span>
+                    // </div>
+                  }
                 </Icon>
-                <Icon>
+                <Icon classes={{ root: classes.navIcon }}>
                   <AiOutlineArrowDown
                     className={classes.rightLocationIconCss}
                     onClick={(e) => handleClick(e)}

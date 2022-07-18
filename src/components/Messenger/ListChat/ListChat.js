@@ -11,17 +11,16 @@ import {
   ListItemText,
   Paper,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import { BsThreeDots } from "react-icons/bs";
 import { MdVideoCall } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
-import SearchIcon from "@material-ui/icons/Search";
+import SearchIcon from "@mui/icons-material/Search";
 import userImg from "../../../images/avatar.png";
 const ListChat = ({ setGuest }) => {
   const { arrUsers } = useSelector((store) => {
     return store.users;
   });
-  console.log(arrUsers);
 
   const classes = useStyles();
   const listHeader = 122;
@@ -49,7 +48,7 @@ const ListChat = ({ setGuest }) => {
           }}
           elevation={0}
         >
-          <Typography variant="h5" style={{ fontWeight: 900 }}>
+          <Typography variant="h5" color="primary" style={{ fontWeight: 900 }}>
             Chat
           </Typography>
           <Box
@@ -94,7 +93,7 @@ const ListChat = ({ setGuest }) => {
         elevation={0}
       >
         <List
-          sx={{ width: "100%", bgcolor: "background.paper" }}
+          sx={{ width: "100%", bgcolor: "transparent" }}
           classes={{ root: classes.listChat }}
         >
           {arrUsers?.map((user, index) => (

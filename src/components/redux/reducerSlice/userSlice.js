@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as api from "../../../app/api.js";
 
-import firebase, { db, auth } from "../../Auth/firebase/config";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
+import firebase, { db } from "../../Auth/firebase/config";
 
 export const login = createAsyncThunk(
   "users/login",
@@ -28,7 +27,6 @@ export const getUsers = createAsyncThunk(
   "users/getUsers",
   async (arrUserThird, { rejectWithValue }) => {
     const response = await api.getUsers();
-    console.log(response);
     if (!response) {
       return rejectWithValue(response);
     }
@@ -118,34 +116,6 @@ const user = createSlice({
     [getUsers.fulfilled]: (state, action) => {
       state.statusUsers = "success";
       state.users = [action.payload];
-      console.log(action.payload);
-      // const userRef = collection(db, "users");
-      // if (auth.currentUser) {
-      //   const q = query(
-      //     userRef,
-      //     where("uid", "not-in", [auth.currentUser.uid])
-      //   );
-      //   onSnapshot(q, (querySnapshot) => {
-      //     querySnapshot.forEach((doc) => {
-      //       console.log(doc.data());
-      //       state.users = [...state.users, doc.data()];
-      //     });
-      //     // state.users = arrUsers;
-      //   });
-      // } else {
-      //   const q = query(userRef);
-      //   onSnapshot(q, (querySnapshot) => {
-      //     querySnapshot.forEach((doc) => {
-      //       console.log(doc.data());
-      //       state.users = [...state.users, doc.data()];
-      //     });
-      //     // state.users = arrUsers;
-      //     // const newArrNotUser = arrUsers.filter(
-      //     //   (data) => data.email !== state.email
-      //     // );
-      //     // console.log(arrUsers, newArrNotUser);
-      //   });
-      // }
     },
     [getUsers.rejected]: (state, action) => {
       state.statusUsers = "failed";

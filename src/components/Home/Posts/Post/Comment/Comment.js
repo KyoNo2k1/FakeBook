@@ -1,11 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Divider,
-  Link,
-  Paper,
-  TextField,
-} from "@material-ui/core";
+import { Avatar, Box, Divider, Link, Paper, TextField } from "@mui/material";
 import React, { useState, useRef, useEffect } from "react";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,15 +10,15 @@ import {
 import useStyles from "./styles";
 import userImg from "../../../../../images/avatar.png";
 import Picker, { SKIN_TONE_MEDIUM_DARK } from "emoji-picker-react";
-import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
-import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
+import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
+import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
 function Comment({ postId }) {
-  const { comments, status } = useSelector((store) => store.comments);
+  const { comments } = useSelector((store) => store.comments);
   const [currentCmtArr, setCurrentCmtArr] = useState();
   useEffect(() => {
     const arrCmt = comments.filter((comment) => comment.postId === postId);
     setCurrentCmtArr(arrCmt);
-  }, [comments]);
+  }, [comments, postId]);
 
   const classes = useStyles();
   const [cmt, setCmt] = useState();
@@ -34,7 +27,7 @@ function Comment({ postId }) {
   const dispatch = useDispatch();
 
   const onEmojiClick = async (event, emojiObject) => {
-    if (inputRef.current.value == "")
+    if (inputRef.current.value === "")
       inputRef.current.value = emojiObject.emoji;
     else {
       inputRef.current.value = cmt + emojiObject.emoji;
@@ -47,9 +40,9 @@ function Comment({ postId }) {
   };
   useEffect(() => {
     dispatch(currentCommentPost(postId));
-  }, []);
+  }, [dispatch, postId]);
   const submitCmt = (e) => {
-    if (e.keyCode === 13 && inputRef.current.value != "") {
+    if (e.keyCode === 13 && inputRef.current.value !== "") {
       dispatch(
         comment({
           postId: postId,
@@ -130,8 +123,12 @@ function Comment({ postId }) {
                 </div>
               </Box>
               <Box>
-                <a className={classes.miniBtnCmt}>Like</a>
-                <a className={classes.miniBtnCmt}>Reply</a>
+                <a href="/#" className={classes.miniBtnCmt}>
+                  Like
+                </a>
+                <a href="/#" className={classes.miniBtnCmt}>
+                  Reply
+                </a>
                 <span style={{ fontSize: "0.7rem" }}>
                   {moment(cmtMessage.createdAt).format("DD-MM-YYYY") +
                     " lúc " +

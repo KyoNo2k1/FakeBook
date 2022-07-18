@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 
 export default makeStyles((theme) => ({
   divider: {
@@ -49,7 +49,7 @@ export default makeStyles((theme) => ({
     wordBreak: "break-word",
   },
   margin: {
-    margin: theme.spacing(1),
+    margin: 8,
   },
   commentHeaderInput: {
     position: "relative",
@@ -65,6 +65,7 @@ export default makeStyles((theme) => ({
     margin: "0 8px",
     cursor: "pointer",
     fontWeight: 600,
+    textDecoration: "none",
     "&:hover": {
       textDecoration: "underline",
     },

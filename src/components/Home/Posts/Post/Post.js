@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import moment from "moment";
 import clsx from "clsx";
 
@@ -20,21 +20,21 @@ import {
   Button,
   Paper,
   Modal,
-} from "@material-ui/core";
+} from "@mui/material";
 import useStyles from "./styles";
 import userImg from "../../../../images/avatar.png";
-import ThumbUpAltRoundedIcon from "@material-ui/icons/ThumbUpAltRounded";
-import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
-import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
-import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
-import ReplyIcon from "@material-ui/icons/Reply";
+import ThumbUpAltRoundedIcon from "@mui/icons-material/ThumbUpAltRounded";
+import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import ReplyIcon from "@mui/icons-material/Reply";
 import { useDispatch } from "react-redux";
 import {
   likePost,
   deletePost,
   authorPost,
 } from "../../../redux/reducerSlice/postSlice.js";
-import FormUpdate from "../../Posts/FormPost/FormUpdate/FormUpdate";
+import FormUpdate from "../FormPost/FormUpdate/FormUpdate";
 
 const Post = ({ post, postId, likeList }) => {
   const classes = useStyles();
@@ -190,7 +190,7 @@ const Post = ({ post, postId, likeList }) => {
             {post.message}
           </Typography>
         </CardContent>
-        <img src={post.selectedFile} />
+        <img alt="SelectedFile" src={post.selectedFile} />
         <Divider classes={{ root: classes.divider }} variant="middle" />
         <CardActions
           disableSpacing

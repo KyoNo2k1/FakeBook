@@ -7,19 +7,19 @@ import {
   FilledInput,
   InputAdornment,
   IconButton,
-} from "@material-ui/core";
+} from "@mui/material";
 import useStyles from "./styles";
 import userImg from "../../../images/avatar.png";
-import CallIcon from "@material-ui/icons/Call";
-import VideocamIcon from "@material-ui/icons/Videocam";
-import InfoIcon from "@material-ui/icons/Info";
+import CallIcon from "@mui/icons-material/Call";
+import VideocamIcon from "@mui/icons-material/Videocam";
+import InfoIcon from "@mui/icons-material/Info";
 import Message from "./Message/Message";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import BrokenImageIcon from "@material-ui/icons/BrokenImage";
-import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
-import GifIcon from "@material-ui/icons/Gif";
-import LoyaltyIcon from "@material-ui/icons/Loyalty";
-import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import BrokenImageIcon from "@mui/icons-material/BrokenImage";
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
+import GifIcon from "@mui/icons-material/Gif";
+import LoyaltyIcon from "@mui/icons-material/Loyalty";
+import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import Picker, { SKIN_TONE_MEDIUM_DARK } from "emoji-picker-react";
 import { useSelector } from "react-redux";
 
@@ -55,7 +55,7 @@ const DetaiChat = ({ guest }) => {
           console.log(error);
         }
       );
-  }, [guest]);
+  }, [guest, user.email]);
 
   const [emojiBtn, setEmojiBtn] = useState(false);
   const chatRef = useRef();

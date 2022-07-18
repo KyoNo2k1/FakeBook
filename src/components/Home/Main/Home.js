@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Grow } from "@material-ui/core";
+import { Grid, Grow } from "@mui/material";
 import Category from "../Category/Category";
 import FriendList from "../FriendList/FriendList";
 import Posts from "../Posts/Posts";
@@ -15,7 +15,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import firebase, { db, auth } from "../../Auth/firebase/config";
+import { db, auth } from "../../Auth/firebase/config";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 function Home() {
@@ -31,14 +31,15 @@ function Home() {
 
       dispatch(isLogin());
     }
-  }, [status, dispatch]);
+  }, [status]);
+
   useEffect(() => {
     if (isLoginThird) {
       toast("Đăng nhập thành công! ");
 
       dispatch(isLogin());
     }
-  }, [isLoginThird, dispatch]);
+  }, [isLoginThird]);
   useEffect(() => {
     if (user) {
       if (!isLoginThird) {
@@ -54,11 +55,9 @@ function Home() {
           }
         }
       }
-      console.log(1);
       dispatch(getUsers());
     }
   }, [user]);
-  console.log(user);
   useEffect(() => {
     if (users[0]) {
       let arr = [...users[0]];
@@ -97,9 +96,8 @@ function Home() {
       <Grow in>
         <Grid
           container
-          justify="center"
           alignItems="stretch"
-          style={{ marginTop: 70, height: "100%" }}
+          style={{ marginTop: 67, height: "100%" }}
         >
           <Grid
             item
@@ -107,11 +105,11 @@ function Home() {
             sm={6}
             md={3}
             alignItems="stretch"
-            style={{ position: "fixed", left: 0 }}
+            style={{ position: "fixed", left: 0, width: "350px" }}
           >
             <Category />
           </Grid>
-          <Grid item xs={12} sm={6} md={5}>
+          <Grid item xs={12} sm={6} md={6} style={{ margin: "0 auto" }}>
             <Posts />
           </Grid>
           <Grid

@@ -1,4 +1,4 @@
-import { Box, Paper } from "@material-ui/core";
+import { Box, Paper } from "@mui/material";
 import React, { useState } from "react";
 import ListChat from "./ListChat/ListChat";
 import DetaiChat from "./DetailChat/DetaiChat";

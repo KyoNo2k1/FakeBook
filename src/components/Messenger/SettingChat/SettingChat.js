@@ -1,25 +1,24 @@
 import React, { useState } from "react";
 
 import userImg from "../../../images/avatar.png";
-import { Avatar, Box, Button, Paper, Typography } from "@material-ui/core";
+import { Avatar, Box, Button, Paper, Typography } from "@mui/material";
 import useStyles from "./styles";
 
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import SearchIcon from "@material-ui/icons/Search";
-import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import ColorLensIcon from "@material-ui/icons/ColorLens";
-import FavoriteSharpIcon from "@material-ui/icons/FavoriteSharp";
-import TranslateIcon from "@material-ui/icons/Translate";
-import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
-import DescriptionIcon from "@material-ui/icons/Description";
-import InsertLinkIcon from "@material-ui/icons/InsertLink";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import NotificationsOutlinedIcon from "@material-ui/icons/NotificationsOutlined";
-import BlockIcon from "@material-ui/icons/Block";
-import ReportProblemOutlinedIcon from "@material-ui/icons/ReportProblemOutlined";
-
+import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
+import GTranslateIcon from "@mui/icons-material/GTranslate";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ColorLensIcon from "@mui/icons-material/ColorLens";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import SearchIcon from "@mui/icons-material/Search";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import DescriptionIcon from "@mui/icons-material/Description";
+import InsertLinkOutlinedIcon from "@mui/icons-material/InsertLinkOutlined";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
+import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
+import ReportOutlinedIcon from "@mui/icons-material/ReportOutlined";
 const SettingChat = () => {
   const classes = useStyles();
   const [setting, setSetting] = useState(false);
@@ -67,6 +66,7 @@ const SettingChat = () => {
           classes={{
             label: classes.settingMenuText,
             contained: classes.settingMenuHover,
+            color: "#000",
           }}
           onClick={() => setSetting(!setting)}
         >
@@ -108,7 +108,7 @@ const SettingChat = () => {
             <Button
               variant="contained"
               className={classes.button}
-              startIcon={<FavoriteSharpIcon style={{ color: "red" }} />}
+              startIcon={<FavoriteBorderIcon style={{ color: "red" }} />}
               disableElevation
               disableRipple
               fullWidth
@@ -122,7 +122,7 @@ const SettingChat = () => {
             <Button
               variant="contained"
               className={classes.button}
-              startIcon={<TranslateIcon />}
+              startIcon={<GTranslateIcon />}
               disableElevation
               disableRipple
               fullWidth
@@ -199,7 +199,7 @@ const SettingChat = () => {
             <Button
               variant="contained"
               className={classes.button}
-              startIcon={<InsertLinkIcon />}
+              startIcon={<InsertLinkOutlinedIcon />}
               disableElevation
               disableRipple
               fullWidth
@@ -262,7 +262,7 @@ const SettingChat = () => {
             <Button
               variant="contained"
               className={classes.button}
-              startIcon={<NotificationsOutlinedIcon />}
+              startIcon={<NotificationsActiveOutlinedIcon />}
               disableElevation
               disableRipple
               fullWidth
@@ -276,7 +276,7 @@ const SettingChat = () => {
             <Button
               variant="contained"
               className={classes.button}
-              startIcon={<BlockIcon />}
+              startIcon={<BlockOutlinedIcon />}
               disableElevation
               disableRipple
               fullWidth
@@ -290,7 +290,7 @@ const SettingChat = () => {
             <Button
               variant="contained"
               className={classes.button}
-              startIcon={<ReportProblemOutlinedIcon />}
+              startIcon={<ReportOutlinedIcon />}
               disableElevation
               disableRipple
               fullWidth

@@ -1,4 +1,4 @@
-import { alpha, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 
 export default makeStyles((theme) => ({
   btnCss: {
@@ -10,11 +10,12 @@ export default makeStyles((theme) => ({
     },
   },
   search: {
+    width: "100%",
     position: "relative",
     borderRadius: "20px",
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    backgroundColor: "#fff",
     "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
+      backgroundColor: "#fff",
     },
     marginLeft: "0 !important",
     height: "36px",
@@ -22,7 +23,7 @@ export default makeStyles((theme) => ({
     marginTop: 15,
   },
   searchIcon: {
-    padding: theme.spacing(0, 1),
+    paddingLeft: 8,
     height: "100%",
     position: "absolute",
     pointerEvents: "none",
@@ -35,10 +36,10 @@ export default makeStyles((theme) => ({
     width: "100%",
   },
   inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
+    padding: "8px 8px 8px 0",
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
+    paddingLeft: `calc(1em + ${32}px)`,
+    // transition: theme.transitions.create("width"),
     width: "100%",
   },
   listChat: {

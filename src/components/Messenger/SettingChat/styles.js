@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 const settingTopHeight = 236;
 export default makeStyles((theme) => ({
   settingTop: {
@@ -27,7 +27,9 @@ export default makeStyles((theme) => ({
   },
   button: {
     backgroundColor: "transparent",
+    color: "#000",
     height: "40px",
+    fontWeight: "bold",
   },
   settingMenuText: {
     fontWeight: "bold",

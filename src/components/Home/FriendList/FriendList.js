@@ -8,14 +8,14 @@ import {
   Paper,
   Box,
   Divider,
-} from "@material-ui/core";
+} from "@mui/material";
 import React from "react";
 
 import userImg from "../../../images/avatar.png";
 import useStyles from "./styles";
-import SearchIcon from "@material-ui/icons/Search";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import VideoCallIcon from "@material-ui/icons/VideoCall";
+import SearchIcon from "@mui/icons-material/Search";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import VideoCallIcon from "@mui/icons-material/VideoCall";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -28,11 +28,7 @@ function FriendList() {
   return (
     <List component="nav" className={classes.root} aria-label="contacts">
       <Paper className={classes.friendListHeader}>
-        <Typography
-          variant="h7"
-          style={{ fontWeight: "bold" }}
-          color="secondary"
-        >
+        <Typography variant="h6" style={{ fontWeight: "bold" }} color="primary">
           Người liên hệ
         </Typography>
         <Box>

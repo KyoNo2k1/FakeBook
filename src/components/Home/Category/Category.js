@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Button, Divider, Paper, Typography } from "@material-ui/core";
+import { Avatar, Button, Divider, Paper, Typography } from "@mui/material";
 
 import userImg from "../../../images/avatar.png";
 import useStyles from "./styles";
@@ -49,7 +49,7 @@ function Category() {
               }
               className={classes.categoryImg}
             />
-            <Typography variant="p" style={{ fontWeight: "bold" }}>
+            <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
               {cate1}
             </Typography>
           </Button>
@@ -76,7 +76,7 @@ function Category() {
               src={categoryListImg2[index]}
               className={classes.categoryImg}
             />
-            <Typography variant="p" style={{ fontWeight: "bold" }}>
+            <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
               {cate2}
             </Typography>
           </Button>

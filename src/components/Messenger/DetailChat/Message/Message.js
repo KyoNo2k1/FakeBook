@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Box, Typography } from "@material-ui/core";
+import { Avatar, Box, Typography } from "@mui/material";
 import useStyles from "./styles";
 import UserImg from "../../../../images/avatar.png";
 import { useSelector } from "react-redux";

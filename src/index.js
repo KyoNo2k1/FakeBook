@@ -1,16 +1,17 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import App from "./App";
 import "./index.css";
 import store from "./components/redux/store";
-
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-    ,
-  </React.StrictMode>,
-  document.getElementById("root")
+import StyledEngineProvider from "@mui/material/StyledEngineProvider";
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.Fragment>
+    <StyledEngineProvider injectFirst>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </StyledEngineProvider>
+  </React.Fragment>
 );

@@ -7,7 +7,7 @@ import {
   Typography,
   Container,
   Divider,
-} from "@material-ui/core";
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import firebase, { db } from "./firebase/config";
@@ -24,9 +24,7 @@ import {
   isLoginThird,
   isSignUp,
 } from "../redux/reducerSlice/userSlice.js";
-import FacebookIcon from "@material-ui/icons/Facebook";
 import { ToastContainer, toast } from "react-toastify";
-import { doc } from "firebase/firestore";
 
 const initialState = {
   firstName: "",
@@ -44,7 +42,6 @@ function Auth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { status, statusSignUp } = useSelector((store) => store.users);
-
   const uiConfig = {
     signInFlow: "popup",
     // signInSuccessUrl: "../home",
@@ -94,7 +91,6 @@ function Auth() {
     if (isSignup) {
       if (e.target[6]?.value === e.target[9]?.value) {
         dispatch(signup(formData));
-        // setTimeout(() => navigate("../"), 3000);
       } else {
         toast("Re-entered password does not match!");
         e.target[9].value = "";
@@ -188,7 +184,7 @@ function Auth() {
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
+              classes={{ root: classes.submit }}
             >
               {" "}
               {isSignup ? "Sign Up" : "Sign In"}{" "}
@@ -200,18 +196,18 @@ function Auth() {
               firebaseAuth={firebase.auth()}
             />
             <Divider classes={{ root: classes.divider }} variant="middle" />
-            <Grid container justify="center">
+            <Grid container justifyContent="center">
               <Grid item>
                 {" "}
                 {isSignup ? (
                   <Button
-                    onClick={switchMode}
-                    style={{ padding: "0px", marginTop: "10px" }}
+                    onClick={() => switchMode()}
+                    style={{ padding: "0px", marginTop: "10px auto" }}
                   >
                     <Paper
                       elevation={6}
                       component="h3"
-                      className={classes.switchMode}
+                      classes={{ root: classes.switchMode }}
                     >
                       {" "}
                       Sign In!{" "}
@@ -219,7 +215,7 @@ function Auth() {
                   </Button>
                 ) : (
                   <Button
-                    onClick={switchMode}
+                    onClick={() => switchMode()}
                     style={{ padding: "0px", marginTop: "10px" }}
                   >
                     <Paper

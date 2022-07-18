@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -54,6 +54,7 @@ const Posts = () => {
       var arrPostId = [];
       posts?.map((post) => {
         arrPostId.push(post.id);
+        return 0;
       });
       var newArr = {
         postId: `(${arrPostId.toString()})`,
