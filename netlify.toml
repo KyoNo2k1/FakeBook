@@ -1,0 +1,35 @@
+[[redirects]]
+from="*"
+to="/index.html"
+status=200
+
+[context.production.environment]
+REACT_APP_BACKEND_URL = https://fakebookbackenddeploy.herokuapp.com/
+REACT_APP_FIREBASE_APIKEY = AIzaSyDLnqtY2K4mp315k7H8Jr966RHtA1u0l2g
+REACT_APP_FIREBASE_AUTH_DOMAIN = fakebook-chat.firebaseapp.com
+REACT_APP_FIREBASE_PROJECTID = fakebook-chat
+REACT_APP_FIREBASE_STORAGE_BUCKET = fakebook-chat.appspot.com
+REACT_APP_FIREBASE_MESSAGING_SENDERID = AIzaSyDLnqtY2K4mp315k7H8Jr966RHtA1u0l2g
+REACT_APP_FIREBASE_APPID = AIzaSyDLnqtY2K4mp315k7H8Jr966RHtA1u0l2g
+REACT_APP_FIREBASE_MEASUREMENTID = AIzaSyDLnqtY2K4mp315k7H8Jr966RHtA1u0l2g
+
+[context.staging.environment]
+REACT_APP_BACKEND_URL = https://fakebookbackenddeploy.herokuapp.com/
+REACT_APP_FIREBASE_APIKEY = AIzaSyDLnqtY2K4mp315k7H8Jr966RHtA1u0l2g
+REACT_APP_FIREBASE_AUTH_DOMAIN = fakebook-chat.firebaseapp.com
+REACT_APP_FIREBASE_PROJECTID = fakebook-chat
+REACT_APP_FIREBASE_STORAGE_BUCKET = fakebook-chat.appspot.com
+REACT_APP_FIREBASE_MESSAGING_SENDERID = AIzaSyDLnqtY2K4mp315k7H8Jr966RHtA1u0l2g
+REACT_APP_FIREBASE_APPID = AIzaSyDLnqtY2K4mp315k7H8Jr966RHtA1u0l2g
+REACT_APP_FIREBASE_MEASUREMENTID = AIzaSyDLnqtY2K4mp315k7H8Jr966RHtA1u0l2g
+
+# no API server exists for other branches, but code will still want a URL here so need to set a "default"
+[context.branch-deploy.environment]
+REACT_APP_BACKEND_URL = https://fakebookbackenddeploy.herokuapp.com/
+REACT_APP_FIREBASE_APIKEY = AIzaSyDLnqtY2K4mp315k7H8Jr966RHtA1u0l2g
+REACT_APP_FIREBASE_AUTH_DOMAIN = fakebook-chat.firebaseapp.com
+REACT_APP_FIREBASE_PROJECTID = fakebook-chat
+REACT_APP_FIREBASE_STORAGE_BUCKET = fakebook-chat.appspot.com
+REACT_APP_FIREBASE_MESSAGING_SENDERID = AIzaSyDLnqtY2K4mp315k7H8Jr966RHtA1u0l2g
+REACT_APP_FIREBASE_APPID = AIzaSyDLnqtY2K4mp315k7H8Jr966RHtA1u0l2g
+REACT_APP_FIREBASE_MEASUREMENTID = AIzaSyDLnqtY2K4mp315k7H8Jr966RHtA1u0l2g
