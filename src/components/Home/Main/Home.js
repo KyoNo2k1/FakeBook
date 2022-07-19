@@ -33,6 +33,7 @@ function Home() {
   const dispatch = useDispatch();
   const [arrUsers, setArrUsers] = useState([]);
   console.log(statusUsers);
+  console.log(users);
   useEffect(() => {
     if (status === "success") {
       toast("Đăng nhập thành công! ");
