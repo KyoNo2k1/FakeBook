@@ -27,6 +27,7 @@ export const getUsers = createAsyncThunk(
   "users/getUsers",
   async (arrUserThird, { rejectWithValue }) => {
     const response = await api.getUsers();
+    console.log(response);
     if (!response) {
       return rejectWithValue(response);
     }
