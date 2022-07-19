@@ -19,12 +19,20 @@ import { db, auth } from "../../Auth/firebase/config";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 function Home() {
-  const { user, users, exp, statusRefToken, status, isLoginThird } =
-    useSelector((store) => store.users);
+  const {
+    user,
+    users,
+    exp,
+    statusRefToken,
+    status,
+    isLoginThird,
+    statusUsers,
+  } = useSelector((store) => store.users);
   const refToken = JSON.parse(localStorage.getItem("profile"))?.refreshToken;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [arrUsers, setArrUsers] = useState([]);
+  console.log(statusUsers);
   useEffect(() => {
     if (status === "success") {
       toast("Đăng nhập thành công! ");
